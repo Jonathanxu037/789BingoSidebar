@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>789bingo · 游戏快捷侧边栏</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{display:flex;font-family:"PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;background:#0f0b24;color:#e9e6f7}
+aside{width:232px;flex:none;display:flex;flex-direction:column;background:linear-gradient(180deg,#2a1670,#150d3a 60%,#0b2a2e);border-right:1px solid rgba(164,123,255,.3)}
+.brand{padding:22px 20px 18px;border-bottom:1px solid rgba(255,255,255,.08)}
+.brand b{display:block;font-size:17px;color:#fff}
+.brand span{font-size:12px;color:#b9b2da}
+nav{display:flex;flex-direction:column;gap:4px;padding:14px 10px}
+nav a{display:flex;flex-direction:column;gap:2px;padding:11px 14px;border-radius:8px;color:#d8d3ef;text-decoration:none;font-size:14px;font-weight:600;border:1px solid transparent}
+nav a small{font-size:11.5px;font-weight:400;color:#9d96c2}
+nav a:hover{background:rgba(255,255,255,.06);color:#fff}
+nav a.on{background:linear-gradient(90deg,rgba(123,63,228,.55),rgba(0,217,160,.25));border-color:rgba(164,123,255,.5);color:#fff}
+.foot{margin-top:auto;padding:14px 20px;font-size:11px;color:#8a84ad;border-top:1px solid rgba(255,255,255,.08)}
+main{flex:1;min-width:0;position:relative;background:#fff}
+iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:none}
+iframe.on{display:block}
+</style>
+</head>
+<body>
+<aside>
+  <div class="brand"><b>游戏快捷侧边栏</b><span>789bingo · 需求与原型</span></div>
+  <nav>
+    <a href="#prototype" data-page="prototype">前台原型<small>H5 游戏页 · 快捷侧边栏</small></a>
+    <a href="#admin" data-page="admin">后台原型<small>活动配置 · 侧边栏管理</small></a>
+    <a href="#prd" data-page="prd">PRD 需求文档<small>v1.8</small></a>
+  </nav>
+  <div class="foot">视觉样式与动效以设计稿为准</div>
+</aside>
+<main>
+  <iframe id="f-prototype" title="前台原型" data-src="prototype.html"></iframe>
+  <iframe id="f-admin" title="后台原型" data-src="admin.html"></iframe>
+  <iframe id="f-prd" title="PRD 需求文档" data-src="prd.html"></iframe>
+</main>
+<script>
+var pages=['prototype','admin','prd'];
+function show(){
+  var p=location.hash.slice(1);if(pages.indexOf(p)<0)p='prototype';
+  pages.forEach(function(k){
+    var f=document.getElementById('f-'+k),on=k===p;
+    if(on&&!f.src)f.src=f.dataset.src;
+    f.classList.toggle('on',on);
+    document.querySelector('nav a[data-page="'+k+'"]').classList.toggle('on',on);
+  });
+}
+window.addEventListener('hashchange',show);show();
+</script>
+</body>
+</html>

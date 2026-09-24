@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:#f0f2f5;font-family:"PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;color:#333;font-size:13px}
+a{color:#2d8cf0;text-decoration:none}a:hover{color:#57a3f3}
+*{box-sizing:border-box}
+input,select,button{font-family:inherit}
+</style>
+</helmet>
+<div style="min-width:1200px;min-height:100vh;display:flex;flex-direction:column">
+  <div style="height:38px;background:#1a67ad;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 18px;font-weight:700;font-size:14px">
+    <div>当前时间: <span style="color:#ffd84a">2026/09/23 05:30:47 -04:00</span></div>
+    <div style="display:flex;gap:22px;font-weight:600"><span>简体中文</span><span>Joshua0926 ▾</span></div>
+  </div>
+  <div style="height:44px;background:#1f6fb6;color:#fff;display:flex;align-items:center;gap:22px;padding:0 18px;font-weight:700;font-size:15px;border-top:1px solid rgba(255,255,255,.12)">
+    <span>在线人数: <span style="color:#ff7a6b">28</span></span>
+    <span>当日注册: <span style="color:#ffd84a">17</span></span>
+    <span>实名认证-待处理: <span style="color:#4fe07a">0</span></span>
+    <span>当日充值成功: <span style="color:#ffd84a">4</span></span>
+    <span style="display:flex;align-items:center;gap:6px">充值: <span style="background:#e8322c;padding:1px 10px;border-radius:2px">0</span></span>
+    <span style="display:flex;align-items:center;gap:6px">提款: <span style="background:#2bb24c;padding:1px 10px;border-radius:2px">0</span></span>
+    <span style="display:flex;align-items:center;gap:6px">风控审核: <span style="background:#2bb24c;padding:1px 10px;border-radius:2px">0</span></span>
+  </div>
+  <div style="flex:1;display:flex;min-height:0">
+    <div style="width:200px;flex:none;background:#d3e2ef;display:flex;flex-direction:column">
+      <div style="height:54px;background:#3d93dd;color:#fff;display:flex;align-items:center;gap:8px;padding:0 18px;font-weight:700;font-size:14px">菜单 <span style="font-size:18px">☰</span></div>
+      <sc-for list="{{ menuTop }}" as="m" hint-placeholder-count="3">
+        <div style="height:56px;display:flex;align-items:center;gap:8px;padding:0 18px;font-weight:700;border-bottom:1px solid #bfd2e3;color:#222"><span style="width:14px;height:14px;border:1.5px solid #3d7fc0;border-radius:2px"></span>{{ m }}<span style="margin-left:auto;color:#7a8ea3">⌄</span></div>
+      </sc-for>
+      <div style="height:56px;display:flex;align-items:center;gap:8px;padding:0 18px;font-weight:700;background:#c3d7e9;color:#222"><span style="width:14px;height:14px;border:1.5px solid #3d7fc0;border-radius:2px"></span>活动配置<span style="background:#e8322c;color:#fff;font-size:11px;padding:0 5px;border-radius:2px;margin-left:30px">0</span><span style="margin-left:auto;color:#7a8ea3">⌃</span></div>
+      <div style="background:#e6eff7;display:flex;flex-direction:column">
+        <sc-for list="{{ menuSub }}" as="m" hint-placeholder-count="6">
+          <div style="height:45px;display:flex;align-items:center;gap:10px;padding-left:26px;color:#333">▸ {{ m }}</div>
+        </sc-for>
+        <div style="height:45px;display:flex;align-items:center;gap:10px;padding-left:30px;color:#fff;font-weight:700;background:#3d9ae8;border-left:4px solid #e8322c">▸ 游戏快捷侧边栏管理</div>
+        <sc-for list="{{ menuSub2 }}" as="m" hint-placeholder-count="2">
+          <div style="height:45px;display:flex;align-items:center;gap:10px;padding-left:26px;color:#333">▸ {{ m }}</div>
+        </sc-for>
+      </div>
+      <sc-for list="{{ menuBottom }}" as="m" hint-placeholder-count="3">
+        <div style="height:56px;display:flex;align-items:center;gap:8px;padding:0 18px;font-weight:700;border-bottom:1px solid #bfd2e3;color:#222"><span style="width:14px;height:14px;border:1.5px solid #3d7fc0;border-radius:2px"></span>{{ m }}<span style="margin-left:auto;color:#7a8ea3">⌄</span></div>
+      </sc-for>
+    </div>
+
+    <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+      <div style="height:40px;background:#fff;display:flex;align-items:center;gap:10px;padding:0 16px;color:#555;border-bottom:1px solid #e8eaec">位置 <span style="color:#bbb">›</span> 活动配置 <span style="color:#bbb">›</span> 游戏快捷侧边栏管理</div>
+      <div style="height:44px;display:flex;align-items:center;padding:0 12px;background:#f5f7f9">
+        <div style="height:30px;padding:0 10px;border:1px solid #2d8cf0;color:#2d8cf0;background:#fff;border-radius:3px;display:flex;align-items:center;gap:8px;font-size:12px">游戏快捷侧边栏管理 <span>×</span></div>
+      </div>
+      <div style="margin:0 10px 16px;background:#fff;border:1px solid #e3e6ea;display:flex;flex-direction:column">
+        <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid #e8eaec">
+          <select style="width:220px;height:32px;border:1px solid #dcdee2;border-radius:3px;padding:0 8px;color:#515a6e;background:#fff">
+            <option>PHP - 菲律宾比索</option><option>USD - 美元</option>
+          </select>
+          <span style="color:#999;font-size:12px">配置按币别站点独立生效</span>
+        </div>
+
+        <div style="padding:14px 16px;display:flex;flex-direction:column;gap:14px">
+          <div style="border:1px solid #e3e6ea">
+            <div style="height:46px;display:flex;align-items:center;padding:0 12px;font-weight:700;border-bottom:1px solid #e8eaec">功能配置</div>
+            <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr))">
+              <div style="display:flex;align-items:center;gap:16px;padding:16px 20px;border-right:1px solid #f0f0f0">
+                <div style="width:180px;color:#515a6e">启用游戏快捷侧边栏</div>
+                <div onClick="{{ onToggleEnabled }}" style="width:44px;height:22px;border-radius:11px;cursor:pointer;position:relative;transition:background .2s;background:{{ enabledBg }}"><div style="position:absolute;top:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:left .2s;left:{{ enabledKnob }}"></div></div>
+                <span style="color:#999;font-size:12px">关闭后前台游戏页不展示浮标及侧边栏</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:16px;padding:16px 20px">
+                <div style="width:180px;color:#515a6e">启用退出时自动展开</div>
+                <div onClick="{{ onToggleAuto }}" style="width:44px;height:22px;border-radius:11px;cursor:pointer;position:relative;transition:background .2s;background:{{ autoBg }}"><div style="position:absolute;top:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:left .2s;left:{{ autoKnob }}"></div></div>
+                <span style="color:#999;font-size:12px">每进入一款游戏，首次点击退出时自动展开一次</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="border:1px solid #e3e6ea">
+            <div style="height:46px;display:flex;align-items:center;gap:16px;padding:0 12px;border-bottom:1px solid #e8eaec">
+              <span style="font-weight:700">Banner配置（根据排序显示顺序，每 5 秒轮播）</span>
+              <span style="display:flex;align-items:center;gap:8px;color:#515a6e">展示 Banner
+                <span onClick="{{ onToggleBanner }}" style="display:inline-block;width:44px;height:22px;border-radius:11px;cursor:pointer;position:relative;transition:background .2s;background:{{ bannerBg }}"><span style="position:absolute;top:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:left .2s;left:{{ bannerKnob }}"></span></span>
+              </span>
+              <button onClick="{{ onAddBanner }}" style="margin-left:auto;height:32px;padding:0 16px;border:none;background:#3a9bef;color:#fff;border-radius:3px;cursor:pointer">新增</button>
+            </div>
+            <div style="padding:10px">
+              <div style="display:grid;grid-template-columns:80px 200px minmax(0,1fr) 110px 110px 150px;border:1px solid #e8eaec;border-bottom:none;background:#f8f8f9;color:#515a6e;font-weight:700;font-size:12px">
+                <div style="padding:12px;text-align:center">排序</div><div style="padding:12px;text-align:center">Banner图</div><div style="padding:12px;text-align:center">关联活动（点击跳转 Promotions 并置顶）</div><div style="padding:12px;text-align:center">是否展示</div><div style="padding:12px;text-align:center">排序调整</div><div style="padding:12px;text-align:center">操作</div>
+              </div>
+              <sc-for list="{{ banners }}" as="b" hint-placeholder-count="3">
+                <div style="display:grid;grid-template-columns:80px 200px minmax(0,1fr) 110px 110px 150px;align-items:center;border:1px solid #e8eaec;border-top:none">
+                  <div style="padding:10px;text-align:center">{{ b.no }}</div>
+                  <div style="padding:8px;display:flex;justify-content:center"><img src="{{ b.src }}" alt="" style="width:150px;height:60px;object-fit:cover;border-radius:3px;border:1px solid #eee"></div>
+                  <div style="padding:10px;text-align:center;display:flex;flex-direction:column;gap:2px"><span>{{ b.name }}</span><span style="color:#999;font-size:12px;font-family:ui-monospace,Menlo,monospace">/promo?pin={{ b.id }}</span></div>
+                  <div style="padding:10px;display:flex;justify-content:center"><span onClick="{{ b.onToggle }}" style="display:inline-block;width:44px;height:22px;border-radius:11px;cursor:pointer;position:relative;background:{{ b.swBg }}"><span style="position:absolute;top:2px;width:18px;height:18px;border-radius:50%;background:#fff;left:{{ b.swKnob }}"></span></span></div>
+                  <div style="padding:10px;display:flex;justify-content:center;gap:6px"><button onClick="{{ b.onUp }}" style="width:28px;height:26px;border:1px solid #dcdee2;background:#fff;border-radius:3px;cursor:pointer">↑</button><button onClick="{{ b.onDown }}" style="width:28px;height:26px;border:1px solid #dcdee2;background:#fff;border-radius:3px;cursor:pointer">↓</button></div>
+                  <div style="padding:10px;display:flex;justify-content:center;gap:14px"><a href="#" onClick="{{ b.onEdit }}">编辑</a><a href="#" onClick="{{ b.onDel }}" style="color:#ed4014">删除</a></div>
+                </div>
+              </sc-for>
+              <sc-if value="{{ noBanners }}" hint-placeholder-val="{{ false }}">
+                <div style="border:1px solid #e8eaec;border-top:none;padding:24px;text-align:center;color:#999">No Data</div>
+              </sc-if>
+            </div>
+          </div>
+
+          <div style="border:1px solid #e3e6ea">
+            <div style="height:46px;display:flex;align-items:center;gap:16px;padding:0 12px;border-bottom:1px solid #e8eaec">
+              <span style="font-weight:700">推荐游戏配置（根据排序显示顺序）</span>
+              <span style="display:flex;align-items:center;gap:8px;color:#515a6e">展示数量
+                <input type="number" min="1" max="30" value="{{ count }}" onChange="{{ onCount }}" style="width:70px;height:30px;border:1px solid #dcdee2;border-radius:3px;padding:0 8px">
+              </span>
+              <span style="color:#999;font-size:12px">前台 2 列展示，首屏约 7 个；维护/下架游戏自动不展示</span>
+              <button onClick="{{ onOpenGames }}" style="margin-left:auto;height:32px;padding:0 16px;border:none;background:#3a9bef;color:#fff;border-radius:3px;cursor:pointer">添加游戏</button>
+            </div>
+            <div style="padding:10px">
+              <div style="display:grid;grid-template-columns:80px 110px minmax(0,1fr) 120px 150px 110px 110px;border:1px solid #e8eaec;border-bottom:none;background:#f8f8f9;color:#515a6e;font-weight:700;font-size:12px">
+                <div style="padding:12px;text-align:center">排序</div><div style="padding:12px;text-align:center">游戏图标</div><div style="padding:12px;text-align:center">游戏名称</div><div style="padding:12px;text-align:center">游戏类型</div><div style="padding:12px;text-align:center">游戏状态</div><div style="padding:12px;text-align:center">排序调整</div><div style="padding:12px;text-align:center">操作</div>
+              </div>
+              <sc-for list="{{ recRows }}" as="g" hint-placeholder-count="6">
+                <div style="display:grid;grid-template-columns:80px 110px minmax(0,1fr) 120px 150px 110px 110px;align-items:center;border:1px solid #e8eaec;border-top:none;background:{{ g.rowBg }}">
+                  <div style="padding:10px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px"><span>{{ g.no }}</span><span style="font-size:11px;color:{{ g.slotColor }}">{{ g.slotLabel }}</span></div>
+                  <div style="padding:8px;display:flex;justify-content:center"><div style="width:48px;height:48px;border-radius:8px;border:1px solid #eee;background:{{ g.bg }}"></div></div>
+                  <div style="padding:10px;text-align:center">{{ g.name }}</div>
+                  <div style="padding:10px;text-align:center;color:#515a6e">{{ g.type }}</div>
+                  <div style="padding:10px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px"><span style="padding:1px 8px;border-radius:3px;font-size:12px;color:{{ g.stColor }};background:{{ g.stBg }}">{{ g.status }}</span><span style="font-size:11px;color:#999">{{ g.stNote }}</span></div>
+                  <div style="padding:10px;display:flex;justify-content:center;gap:6px"><button onClick="{{ g.onUp }}" style="width:28px;height:26px;border:1px solid #dcdee2;background:#fff;border-radius:3px;cursor:pointer">↑</button><button onClick="{{ g.onDown }}" style="width:28px;height:26px;border:1px solid #dcdee2;background:#fff;border-radius:3px;cursor:pointer">↓</button></div>
+                  <div style="padding:10px;display:flex;justify-content:center"><a href="#" onClick="{{ g.onDel }}" style="color:#ed4014">删除</a></div>
+                </div>
+              </sc-for>
+              <sc-if value="{{ noGames }}" hint-placeholder-val="{{ false }}">
+                <div style="border:1px solid #e8eaec;border-top:none;padding:24px;text-align:center;color:#999">No Data</div>
+              </sc-if>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="position:sticky;bottom:0;z-index:5;margin-top:auto;height:60px;background:rgba(255,255,255,.97);border-top:1px solid #e3e6ea;box-shadow:0 -4px 12px rgba(0,0,0,.06);display:flex;align-items:center;justify-content:flex-end;gap:10px;padding:0 24px">
+        <span style="margin-right:auto;color:#999;font-size:12px">修改后需点击"保存配置"才会在前台生效</span>
+        <button onClick="{{ onReset }}" style="height:34px;padding:0 20px;border:1px solid #dcdee2;background:#fff;border-radius:3px;cursor:pointer;color:#515a6e">重置</button>
+        <button onClick="{{ onSave }}" style="height:34px;padding:0 24px;border:none;background:#2d8cf0;color:#fff;border-radius:3px;cursor:pointer">保存配置</button>
+      </div>
+    </div>
+  </div>
+
+  <sc-if value="{{ gameModal }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:10">
+      <div style="width:640px;max-height:80vh;background:#fff;border-radius:4px;display:flex;flex-direction:column;box-shadow:0 8px 30px rgba(0,0,0,.25)">
+        <div style="height:50px;display:flex;align-items:center;padding:0 18px;border-bottom:1px solid #e8eaec;font-weight:700;font-size:14px">添加推荐游戏<span onClick="{{ onCloseModal }}" style="margin-left:auto;cursor:pointer;color:#999;font-size:18px">×</span></div>
+        <div style="padding:14px 18px 8px"><input value="{{ search }}" onInput="{{ onSearch }}" placeholder="搜索游戏名称" style="width:100%;height:32px;border:1px solid #dcdee2;border-radius:3px;padding:0 10px"></div>
+        <div style="flex:1;overflow:auto;padding:0 18px">
+          <sc-for list="{{ pool }}" as="p" hint-placeholder-count="5">
+            <div onClick="{{ p.onPick }}" style="display:flex;align-items:center;gap:12px;padding:8px 4px;border-bottom:1px solid #f3f3f3;cursor:{{ p.cursor }};opacity:{{ p.opacity }}">
+              <span style="width:16px;height:16px;border-radius:2px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;border:1px solid {{ p.boxBorder }};background:{{ p.boxBg }}">{{ p.tick }}</span>
+              <div style="width:40px;height:40px;border-radius:6px;background:{{ p.bg }}"></div>
+              <span style="flex:1">{{ p.name }}</span>
+              <span style="color:#999;font-size:12px">{{ p.type }}</span>
+              <span style="font-size:12px;color:{{ p.stColor }}">{{ p.status }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="height:56px;display:flex;align-items:center;justify-content:flex-end;gap:8px;padding:0 18px;border-top:1px solid #e8eaec">
+          <span style="margin-right:auto;color:#999;font-size:12px">已选 {{ pickedCount }} 个，将追加到列表末尾</span>
+          <button onClick="{{ onCloseModal }}" style="height:32px;padding:0 16px;border:1px solid #dcdee2;background:#fff;border-radius:3px;cursor:pointer">取消</button>
+          <button onClick="{{ onConfirmGames }}" style="height:32px;padding:0 18px;border:none;background:#2d8cf0;color:#fff;border-radius:3px;cursor:pointer">确定</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ bannerModal }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:10">
+      <div style="width:520px;background:#fff;border-radius:4px;display:flex;flex-direction:column;box-shadow:0 8px 30px rgba(0,0,0,.25)">
+        <div style="height:50px;display:flex;align-items:center;padding:0 18px;border-bottom:1px solid #e8eaec;font-weight:700;font-size:14px">{{ bannerModalTitle }}<span onClick="{{ onCloseModal }}" style="margin-left:auto;cursor:pointer;color:#999;font-size:18px">×</span></div>
+        <div style="padding:18px;display:grid;grid-template-columns:100px minmax(0,1fr);gap:16px 12px;align-items:center">
+          <span style="color:#515a6e;text-align:right">Banner图</span>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div style="width:250px;height:100px;border:1px dashed #c5c8ce;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#999;background:#fafafa;background-size:cover;background-position:center;background-image:{{ draftImg }}">{{ draftImgHint }}</div>
+            <span style="color:#999;font-size:12px">建议 700×280（5:2），JPG/PNG，≤ 500KB</span>
+          </div>
+          <span style="color:#515a6e;text-align:right">关联活动</span>
+          <select value="{{ draftPromo }}" onChange="{{ onDraftPromo }}" style="height:32px;border:1px solid #dcdee2;border-radius:3px;padding:0 8px">
+            <sc-for list="{{ promoOptions }}" as="o" hint-placeholder-count="3"><option value="{{ o.id }}">{{ o.name }}</option></sc-for>
+          </select>
+          <span style="color:#515a6e;text-align:right">是否展示</span>
+          <span onClick="{{ onDraftShow }}" style="display:inline-block;width:44px;height:22px;border-radius:11px;cursor:pointer;position:relative;background:{{ draftShowBg }}"><span style="position:absolute;top:2px;width:18px;height:18px;border-radius:50%;background:#fff;left:{{ draftShowKnob }}"></span></span>
+        </div>
+        <div style="height:56px;display:flex;align-items:center;justify-content:flex-end;gap:8px;padding:0 18px;border-top:1px solid #e8eaec">
+          <button onClick="{{ onCloseModal }}" style="height:32px;padding:0 16px;border:1px solid #dcdee2;background:#fff;border-radius:3px;cursor:pointer">取消</button>
+          <button onClick="{{ onConfirmBanner }}" style="height:32px;padding:0 18px;border:none;background:#2d8cf0;color:#fff;border-radius:3px;cursor:pointer">确定</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;top:90px;left:50%;transform:translateX(-50%);background:#fff;border-radius:4px;padding:10px 18px;box-shadow:0 4px 16px rgba(0,0,0,.18);display:flex;align-items:center;gap:8px;z-index:20"><span style="width:16px;height:16px;border-radius:50%;background:#19be6b;color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center">✓</span>{{ toast }}</div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const ALL = [
+  { id: 'dragon-tiger', name: 'D Dragon Tiger', type: '真人', status: 'ok' },
+  { id: 'pok-deng', name: 'D Pok Deng', type: '真人', status: 'ok' },
+  { id: 'sic-bo', name: 'D Sic Bo', type: '真人', status: 'ok' },
+  { id: 'fortune-goddess', name: 'Fortune Goddess', type: '电子', status: 'ok' },
+  { id: 'fortune-gems', name: 'Fortune Gems', type: '电子', status: 'ok' },
+  { id: 'crazy-time', name: 'Crazy Time', type: '真人', status: 'maintenance' },
+  { id: 'fortune-bingo', name: 'Fortune Bingo', type: '电子', status: 'ok' },
+  { id: 'fortune-gems-2', name: 'Fortune Gems 2', type: '电子', status: 'ok' },
+  { id: 'super-ace-deluxe', name: 'Super Ace Deluxe', type: '电子', status: 'ok' },
+  { id: 'super-ace-joker', name: 'Super Ace Joker', type: '电子', status: 'ok' },
+  { id: 'wukong', name: 'Black Wukong', type: '电子', status: 'ok' },
+  { id: 'money-coming', name: 'Money Coming', type: '电子', status: 'offline' },
+];
+const IMG = { wukong: null, 'crazy-time': null, 'money-coming': null };
+const icon = g => IMG[g.id] === null ? 'linear-gradient(145deg,#c5cbd6,#8e97a8)' : `url(assets/games/${g.id}.png) center/cover`;
+const PROMOS = [
+  { id: 'friday-jackpot-drop', name: 'Friday Jackpot Drop', src: 'assets/banner-1.png' },
+  { id: 'loyalty-lucky-spin', name: 'Loyalty Lucky Spin Rewards', src: 'assets/banner-2.png' },
+  { id: 'level-up-rewards', name: 'Level Up and Get Rewarded', src: 'assets/banner-3.png' },
+];
+const ST = { ok: ['正常', '#19be6b', '#e8f8ef', ''], maintenance: ['维护中', '#ff9900', '#fff4e0', '前台不展示'], offline: ['已下架', '#ed4014', '#ffecea', '前台不展示'] };
+const sw = on => ({ bg: on ? '#2d8cf0' : '#ccc', knob: on ? '24px' : '2px' });
+const init = () => ({
+  enabled: true, autoExpand: true, showBanner: true, count: 10,
+  banners: PROMOS.map(p => ({ ...p, show: true })),
+  rec: ['dragon-tiger', 'pok-deng', 'sic-bo', 'crazy-time', 'fortune-goddess', 'fortune-gems', 'fortune-bingo', 'fortune-gems-2', 'super-ace-deluxe', 'super-ace-joker'],
+});
+
+class Component extends DCLogic {
+  state = { ...init(), modal: null, picked: [], search: '', toast: '', draft: null, editIdx: -1 };
+  flash(t) { this.setState({ toast: t }); clearTimeout(this._t); this._t = setTimeout(() => this.setState({ toast: '' }), 1800); }
+  move(key, i, d) {
+    const arr = [...this.state[key]]; const j = i + d;
+    if (j < 0 || j >= arr.length) return;
+    [arr[i], arr[j]] = [arr[j], arr[i]]; this.setState({ [key]: arr });
+  }
+  del(key, i) { const arr = [...this.state[key]]; arr.splice(i, 1); this.setState({ [key]: arr }); }
+  renderVals() {
+    const s = this.state;
+    const e = sw(s.enabled), a = sw(s.autoExpand), b = sw(s.showBanner);
+    let visibleSlot = 0;
+    const recRows = s.rec.map((id, i) => {
+      const g = ALL.find(x => x.id === id); const st = ST[g.status];
+      const shown = g.status === 'ok' && visibleSlot < s.count; if (shown) visibleSlot++;
+      return {
+        no: i + 1, name: g.name, type: g.type, bg: icon(g), status: st[0], stColor: st[1], stBg: st[2], stNote: st[3],
+        slotLabel: shown ? '前台第 ' + visibleSlot + ' 位' : (g.status === 'ok' ? '超出展示数量' : '—'),
+        slotColor: shown ? '#2d8cf0' : '#bbb', rowBg: g.status === 'ok' ? '#fff' : '#fafafa',
+        onUp: () => this.move('rec', i, -1), onDown: () => this.move('rec', i, 1), onDel: ev => { ev.preventDefault(); this.del('rec', i); },
+      };
+    });
+    const q = s.search.trim().toLowerCase();
+    const pool = ALL.filter(g => !q || g.name.toLowerCase().includes(q)).map(g => {
+      const added = s.rec.includes(g.id), picked = s.picked.includes(g.id), st = ST[g.status];
+      return {
+        name: g.name, type: g.type, bg: icon(g), status: added ? '已添加' : st[0], stColor: added ? '#999' : st[1],
+        tick: added || picked ? '✓' : '', boxBg: added ? '#c5c8ce' : picked ? '#2d8cf0' : '#fff', boxBorder: added ? '#c5c8ce' : picked ? '#2d8cf0' : '#dcdee2',
+        cursor: added ? 'not-allowed' : 'pointer', opacity: added ? 0.6 : 1,
+        onPick: () => { if (added) return; this.setState({ picked: picked ? s.picked.filter(x => x !== g.id) : [...s.picked, g.id] }); },
+      };
+    });
+    const d = s.draft || {}; const ds = sw(d.show);
+    const dp = PROMOS.find(p => p.id === d.id);
+    return {
+      menuTop: ['公告管理', '充值配置', '日志管理'],
+      menuSub: ['活动列表', '活动类别管理', '活动目的管理', '派奖审核', '活动图素材管理', '轮播图素材管理'],
+      menuSub2: ['流水稽核配置管理', '流水稽核配置统计'],
+      menuBottom: ['代理结算', '系统管理', '五级代汇总报表'],
+      enabledBg: e.bg, enabledKnob: e.knob, autoBg: s.enabled ? a.bg : '#e3e3e3', autoKnob: a.knob,
+      bannerBg: b.bg, bannerKnob: b.knob,
+      onToggleEnabled: () => this.setState({ enabled: !s.enabled }),
+      onToggleAuto: () => s.enabled && this.setState({ autoExpand: !s.autoExpand }),
+      onToggleBanner: () => this.setState({ showBanner: !s.showBanner }),
+      banners: s.banners.map((x, i) => {
+        const w = sw(x.show);
+        return { no: i + 1, src: x.src, name: x.name, id: x.id, swBg: w.bg, swKnob: w.knob,
+          onToggle: () => this.setState({ banners: s.banners.map((y, j) => j === i ? { ...y, show: !y.show } : y) }),
+          onUp: () => this.move('banners', i, -1), onDown: () => this.move('banners', i, 1),
+          onEdit: ev => { ev.preventDefault(); this.setState({ modal: 'banner', editIdx: i, draft: { ...x } }); },
+          onDel: ev => { ev.preventDefault(); this.del('banners', i); } };
+      }),
+      noBanners: s.banners.length === 0,
+      onAddBanner: () => this.setState({ modal: 'banner', editIdx: -1, draft: { ...PROMOS[0], show: true } }),
+      count: s.count, onCount: ev => this.setState({ count: Math.max(1, Math.min(30, parseInt(ev.target.value) || 1)) }),
+      recRows, noGames: s.rec.length === 0,
+      onOpenGames: () => this.setState({ modal: 'game', picked: [], search: '' }),
+      gameModal: s.modal === 'game', bannerModal: s.modal === 'banner',
+      search: s.search, onSearch: ev => this.setState({ search: ev.target.value }), pool, pickedCount: s.picked.length,
+      onCloseModal: () => this.setState({ modal: null }),
+      onConfirmGames: () => { this.setState({ rec: [...s.rec, ...s.picked], modal: null }); if (s.picked.length) this.flash('已添加 ' + s.picked.length + ' 个游戏'); },
+      bannerModalTitle: s.editIdx >= 0 ? '编辑 Banner' : '新增 Banner',
+      draftImg: dp ? `url(${dp.src})` : 'none', draftImgHint: dp ? '' : '点击上传',
+      draftPromo: d.id, promoOptions: PROMOS.map(p => ({ id: p.id, name: p.name })),
+      onDraftPromo: ev => { const p = PROMOS.find(x => x.id === ev.target.value); this.setState({ draft: { ...d, ...p } }); },
+      draftShowBg: ds.bg, draftShowKnob: ds.knob, onDraftShow: () => this.setState({ draft: { ...d, show: !d.show } }),
+      onConfirmBanner: () => {
+        const arr = [...s.banners]; if (s.editIdx >= 0) arr[s.editIdx] = d; else arr.push(d);
+        this.setState({ banners: arr, modal: null }); this.flash(s.editIdx >= 0 ? 'Banner 已更新' : 'Banner 已新增');
+      },
+      onSave: () => this.flash('保存成功，前台即时生效'),
+      onReset: () => { this.setState(init()); this.flash('已重置为上次保存的配置'); },
+      hasToast: !!s.toast, toast: s.toast,
+    };
+  }
+}
+</script>
+</body>
+</html>

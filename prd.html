@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script src="./doc-page.js"></script>
+<style>
+doc-page:not(:defined){visibility:hidden}
+body{margin:0}
+a{color:#5a2fc4}a:hover{color:#00a07a}
+</style>
+</helmet>
+<doc-page size="a4" margin="0.7in" style="font-family:'PingFang SC','Microsoft YaHei','Helvetica Neue',sans-serif;font-size:13.5px;line-height:1.65;color:#1f2330">
+  <h1 style="font-size:28px;margin:0 0 6px;color:#1b1340">游戏快捷侧边栏 PRD</h1>
+  <div style="display:flex;flex-wrap:wrap;gap:6px 22px;color:#5b6070;font-size:12.5px;padding-bottom:14px;border-bottom:2px solid #7b3fe4;margin-bottom:18px">
+    <span>版本：v1.8</span><span>日期：2026-09-23</span><span>平台：789bingo（H5 游戏页 + 管理后台）</span><span>原型：<a href="index.html#prototype" target="_top">前台原型</a> · <a href="index.html#admin" target="_top">后台原型</a></span>
+  </div>
+
+  <nav id="toc" style="margin:0 0 8px;padding:14px 18px;background:#f8f6fd;border:1px solid #e6e0f5;border-radius:6px">
+    <div style="font-size:15px;font-weight:800;color:#1b1340;margin-bottom:6px">目录</div>
+    <div style="columns:2;column-gap:28px">
+      <a href="#s1" style="display:block;font-weight:700;color:#1b1340;padding:3px 0;margin-top:4px">1. 背景与目标</a>
+      <a href="#s2" style="display:block;font-weight:700;color:#1b1340;padding:3px 0;margin-top:4px">2. 名词说明</a>
+      <a href="#s3" style="display:block;font-weight:700;color:#1b1340;padding:3px 0;margin-top:4px">3. 前端需求（H5 游戏页）</a>
+      <a href="#s3-1" style="display:block;color:#4a4f60;padding:2px 0 2px 18px;font-size:12.5px">3.1 浮标</a>
+      <a href="#s3-2" style="display:block;color:#4a4f60;padding:2px 0 2px 18px;font-size:12.5px">3.2 侧边栏结构</a>
+      <a href="#s3-3" style="display:block;color:#4a4f60;padding:2px 0 2px 18px;font-size:12.5px">3.3 展开 / 收起</a>
+      <a href="#s3-4" style="display:block;color:#4a4f60;padding:2px 0 2px 18px;font-size:12.5px">3.4 首次退出自动展开</a>
+      <a href="#s3-5" style="display:block;color:#4a4f60;padding:2px 0 2px 18px;font-size:12.5px">3.5 退出自动展开规则</a>
+      <a href="#s3-6" style="display:block;color:#4a4f60;padding:2px 0 2px 18px;font-size:12.5px">3.6 游戏切换</a>
+      <a href="#s3-7" style="display:block;color:#4a4f60;padding:2px 0 2px 18px;font-size:12.5px">3.7 Mini Banner 轮播与跳转</a>
+      <a href="#s3-8" style="display:block;color:#4a4f60;padding:2px 0 2px 18px;font-size:12.5px">3.8 离开当前游戏的余额保障（通用规则）</a>
+      <a href="#s4" style="display:block;font-weight:700;color:#1b1340;padding:3px 0;margin-top:4px">4. 后台需求</a>
+      <a href="#s4-1" style="display:block;color:#4a4f60;padding:2px 0 2px 18px;font-size:12.5px">4.1 功能配置</a>
+      <a href="#s4-2" style="display:block;color:#4a4f60;padding:2px 0 2px 18px;font-size:12.5px">4.2 Banner 配置</a>
+      <a href="#s4-3" style="display:block;color:#4a4f60;padding:2px 0 2px 18px;font-size:12.5px">4.3 推荐游戏配置</a>
+      <a href="#s5" style="display:block;font-weight:700;color:#1b1340;padding:3px 0;margin-top:4px">5. 异常处理</a>
+      <a href="#s6" style="display:block;font-weight:700;color:#1b1340;padding:3px 0;margin-top:4px">6. 数据埋点</a>
+      <a href="#s7" style="display:block;font-weight:700;color:#1b1340;padding:3px 0;margin-top:4px">7. 核心流程</a>
+      <a href="#s8" style="display:block;font-weight:700;color:#1b1340;padding:3px 0;margin-top:4px">8. 验收标准</a>
+      <a href="#s9" style="display:block;font-weight:700;color:#1b1340;padding:3px 0;margin-top:4px">9. 待确认事项</a>
+    </div>
+  </nav>
+
+  <h2 id="s1" style="font-size:19px;color:#1b1340;margin:22px 0 8px;scroll-margin-top:16px">1. 背景与目标</h2>
+  <p>在游戏过程中提供快捷入口，方便用户使用常用功能并快速切换其他游戏；用户在每款游戏内首次点击退出时自动展开侧边栏展示推荐内容，减少退出后的流失。</p>
+  <ul>
+    <li>提升游戏间切换率与推荐后继续投注。</li>
+    <li>降低"退出即流失"比例。</li>
+    <li>为活动 Banner 提供游戏内曝光位，并将流量导入 Promotions 页。</li>
+  </ul>
+
+  <h2 id="s2" style="font-size:19px;color:#1b1340;margin:22px 0 8px;scroll-margin-top:16px">2. 名词说明</h2>
+  <table style="width:100%;border-collapse:collapse;font-size:12.5px">
+    <thead><tr><th style="text-align:left;padding:7px 9px;background:#f1edfb;border:1px solid #ddd6f3;width:28%">名词</th><th style="text-align:left;padding:7px 9px;background:#f1edfb;border:1px solid #ddd6f3">说明</th></tr></thead>
+    <tbody>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">浮标</td><td style="padding:7px 9px;border:1px solid #e4e4ea">游戏页右上角的 789bingo Logo 圆形按钮，侧边栏收起时的唯一入口。</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">侧边栏</td><td style="padding:7px 9px;border:1px solid #e4e4ea">右侧窄版纵向面板，包含快捷功能、Mini Banner、推荐游戏。</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">自动展开机会</td><td style="padding:7px 9px;border:1px solid #e4e4ea">每进入一款游戏获得 1 次；首次点击退出时消耗。</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">手动展开 / 自动展开</td><td style="padding:7px 9px;border:1px solid #e4e4ea">用户点击浮标展开 / 首次退出时系统展开。</td></tr>
+          </tbody>
+  </table>
+
+  <h2 id="s3" style="font-size:19px;color:#1b1340;margin:22px 0 8px;scroll-margin-top:16px">3. 前端需求（H5 游戏页）</h2>
+
+  <p style="padding:8px 12px;background:#f6f3fd;border-left:3px solid #7b3fe4">本章仅描述功能与交互逻辑；浮标、侧边栏及各模块的视觉样式、尺寸与动效均以设计师设计稿为准。</p>
+  <h3 id="s3-1" style="font-size:15.5px;margin:16px 0 6px;scroll-margin-top:16px">3.1 浮标</h3>
+  <ul>
+    <li>默认状态仅显示浮标；后台"启用游戏快捷侧边栏"关闭时不显示。</li>
+    <li>点击浮标手动展开侧边栏；侧边栏展开期间浮标隐藏，收起后恢复。</li>
+  </ul>
+
+  <h3 id="s3-2" style="font-size:15.5px;margin:16px 0 6px;scroll-margin-top:16px">3.2 侧边栏结构</h3>
+  <p>右侧窄版纵向布局，展开后保留主要游戏画面。从上到下：</p>
+  <ol>
+    <li><strong>标题栏</strong>：平台品牌标识。</li>
+    <li><strong>收起按钮</strong>：点击收起侧边栏并恢复浮标。</li>
+    <li><strong>快捷功能</strong>：Home、Deposit、Reload，点击分别跳转首页 / 充值页 / 刷新余额；三者均须先完成当前游戏结算与余额同步（见 3.8）。</li>
+    <li><strong>Mini Banner</strong>：详见 3.7。</li>
+    <li><strong>推荐游戏</strong>：2 列布局，首屏每列展示 3 个完整 Icon + 第 4 个部分露出（2 × 3.5）；区域支持上下滑动。仅展示正方形 Icon，不展示名称、类别、Provider、Hot/New/Jackpot 等标签。</li>
+  </ol>
+  <p>推荐列表数据规则：按后台排序；过滤维护 / 下架 / 不可进入的游戏及当前正在玩的游戏；取前 N 个（N = 后台展示数量）。不足时按实际数量展示。</p>
+
+  <h3 id="s3-3" style="font-size:15.5px;margin:16px 0 6px;scroll-margin-top:16px">3.3 展开 / 收起</h3>
+  <ul>
+    <li><strong>展开方式</strong>：① 点击浮标手动展开；② 每款游戏内首次退出时自动展开（见 3.4、3.5）。</li>
+    <li><strong>收起方式</strong>：① 收起按钮；② 点击侧边栏外的游戏区域（退出确认显示期间除外）。</li>
+  </ul>
+
+  <h3 id="s3-4" style="font-size:15.5px;margin:16px 0 6px;scroll-margin-top:16px">3.4 首次退出自动展开</h3>
+  <ul>
+    <li>游戏内退出入口、退出操作及二次确认弹窗沿用平台现有实现，本需求不做调整。</li>
+    <li>用户在当前游戏内首次触发退出时，在平台现有退出流程基础上自动展开侧边栏；用户可直接点击推荐游戏切换。</li>
+  </ul>
+  <h3 id="s3-5" style="font-size:15.5px;margin:16px 0 6px;scroll-margin-top:16px">3.5 退出自动展开规则</h3>
+  <table style="width:100%;border-collapse:collapse;font-size:12.5px">
+    <thead><tr><th style="text-align:left;padding:7px 9px;background:#f1edfb;border:1px solid #ddd6f3;width:34%">场景</th><th style="text-align:left;padding:7px 9px;background:#f1edfb;border:1px solid #ddd6f3">系统行为</th></tr></thead>
+    <tbody>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">进入游戏后首次点击退出（机会可用）</td><td style="padding:7px 9px;border:1px solid #e4e4ea">按平台现有流程触发退出确认，同时自动展开侧边栏；机会标记为已使用。若侧边栏已手动展开，则保持展开并转为"自动展开"状态。</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">自动展开后点击推荐游戏</td><td style="padding:7px 9px;border:1px solid #e4e4ea">关闭退出确认，退出当前游戏并直接进入所选游戏。</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">自动展开后用户取消退出</td><td style="padding:7px 9px;border:1px solid #e4e4ea">同时收起侧边栏，继续停留当前游戏。</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">自动展开后仅点收起按钮</td><td style="padding:7px 9px;border:1px solid #e4e4ea">收起侧边栏，退出确认保留，由用户继续选择。</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">自动展开后用户确认退出</td><td style="padding:7px 9px;border:1px solid #e4e4ea">按平台现有流程正常退出。</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">同一游戏内再次点击退出</td><td style="padding:7px 9px;border:1px solid #e4e4ea">按平台现有流程退出，不再自动展开。</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">进入新游戏 / 从大厅重新进入</td><td style="padding:7px 9px;border:1px solid #e4e4ea">自动展开机会重置为可用。</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">手动展开后再关闭</td><td style="padding:7px 9px;border:1px solid #e4e4ea">不消耗、不影响自动展开机会。</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">后台关闭"退出时自动展开"</td><td style="padding:7px 9px;border:1px solid #e4e4ea">退出按平台现有流程执行；浮标与手动展开不受影响。</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top:8px">状态以"用户 + 当前游戏会话"为维度保存在前端内存中，刷新页面视为重新进入游戏。</p>
+
+  <h3 id="s3-6" style="font-size:15.5px;margin:16px 0 6px;scroll-margin-top:16px">3.6 游戏切换</h3>
+  <p><strong>切换逻辑</strong></p>
+  <ol>
+    <li>用户点击推荐游戏列表中的游戏 Icon → 锁定点击（仅处理第一次有效点击）。</li>
+    <li>直接退出当前游戏，并跳转进入所选游戏（不经过大厅）。</li>
+    <li>进入新游戏后，侧边栏刷新自动展开机会：用户在新游戏内首次点击退出 / 关闭游戏时，将再次自动展开侧边栏。</li>
+    <li>启动失败：提示游戏暂时不可用，侧边栏保持展开，解锁可重新选择。</li>
+    <li>所选游戏已维护 / 下架（侧边栏列表未及时同步）：不退出当前游戏，弹窗提示"该游戏当前维护中"，同时刷新侧边栏推荐游戏列表；用户仍停留在当前游戏中，游戏不中断。</li>
+  </ol>
+  <p><strong>余额结算与同步</strong></p>
+  <ol>
+    <li>退出当前游戏时，按平台现有规则对该第三方游戏的用户余额与平台余额进行结算同步。</li>
+    <li>进入新游戏时，按平台现有规则将用户账户余额同步至新游戏对应的第三方供应商。</li>
+    <li>须在当前游戏结算同步完成后，再发起新游戏的余额同步与启动；任一环节失败按"启动失败"处理，并确保用户余额不丢失、不重复。</li>
+  </ol>
+  <p><strong>当前局未结算时的切换</strong></p>
+  <p>部分游戏在用户已投注、当前局尚未结算时点击推荐游戏，为避免第三方游戏平台与我方平台的用户余额不一致，按以下流程处理：</p>
+  <ol>
+    <li>保持当前游戏画面，显示 loading 蒙层（半透明，用户可透过蒙层看到当前局的结算过程与结果），期间屏蔽其他操作及重复点击。</li>
+    <li>等待当前局结算完成。</li>
+    <li>结算完成后，按平台现有规则将第三方平台余额与我方平台账户余额结算同步。</li>
+    <li>同步完成后，退出当前游戏并跳转进入所选新游戏，将结算后的用户账户余额同步至新游戏的第三方供应商。</li>
+    <li>任一环节失败（结算超时、同步失败、新游戏启动失败）：关闭蒙层，提示游戏暂时不可用，用户留在当前游戏中，余额以同步后的结果为准。</li>
+  </ol>
+
+  <h3 id="s3-7" style="font-size:15.5px;margin:16px 0 6px;scroll-margin-top:16px">3.7 Mini Banner 轮播与跳转</h3>
+  <ul>
+    <li>Banner 来源于平台现有活动 Banner 列表（仅包含当前平台上展示中的活动），由后台选择；前台展示"是否展示 = 是"的 Banner，按后台排序轮播，每 5 秒自动切换。</li>
+    <li>点击 Mini Banner 任意位置均不跳转至单个活动详情页，统一在完成当前游戏结算与余额同步（见 3.8）后跳转至 Promotions 活动列表页：<code style="font-size:12px;background:#f4f2fa;padding:1px 5px;border-radius:3px">https://789bingo.com/promo</code>。</li>
+    <li>活动列表页排序：Mini Banner 中配置展示的活动排序优先级最高，按 Mini Banner 的后台排序依次置于列表最前；其余活动保持平台原有排序展示在后。</li>
+    <li>后台 Banner 总开关关闭或无可展示 Banner 时，隐藏该区域。</li>
+  </ul>
+
+  <h3 id="s3-8" style="font-size:15.5px;margin:16px 0 6px;scroll-margin-top:16px">3.8 离开当前游戏的余额保障（通用规则）</h3>
+  <p>凡是会关闭当前游戏、从当前游戏直接跳转离开或需要读取最新余额的操作，均须先完成当前游戏结算，并统一第三方游戏平台与我方平台的用户账户余额，遵循 3.6 中"余额结算与同步"及"当前局未结算时的切换"规则，包括但不限于：</p>
+  <table style="width:100%;border-collapse:collapse;font-size:12.5px">
+    <thead><tr><th style="text-align:left;padding:7px 9px;background:#f1edfb;border:1px solid #ddd6f3;width:34%">触发操作</th><th style="text-align:left;padding:7px 9px;background:#f1edfb;border:1px solid #ddd6f3">离开后去向</th></tr></thead>
+    <tbody>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">点击推荐游戏</td><td style="padding:7px 9px;border:1px solid #e4e4ea">进入所选新游戏</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">快捷功能 Home</td><td style="padding:7px 9px;border:1px solid #e4e4ea">平台首页</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">快捷功能 Deposit</td><td style="padding:7px 9px;border:1px solid #e4e4ea">充值页</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">快捷功能 Reload</td><td style="padding:7px 9px;border:1px solid #e4e4ea">刷新并展示结算同步后的最新余额</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">点击 Mini Banner</td><td style="padding:7px 9px;border:1px solid #e4e4ea">Promotions 列表页</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">自动展开后用户确认退出 / 关闭游戏</td><td style="padding:7px 9px;border:1px solid #e4e4ea">按平台现有退出去向</td></tr>
+    </tbody>
+  </table>
+  <ol style="margin-top:10px">
+    <li>离开前先判断当前局是否已投注未结算：是则显示 loading 蒙层，展示当前局结算过程，结算完成后再继续。</li>
+    <li>按平台现有规则完成第三方平台与我方平台的余额结算同步后，才执行跳转。</li>
+    <li>如目标为新游戏，再将结算后的余额同步至新游戏的第三方供应商。</li>
+    <li>任一环节失败：关闭蒙层并提示，用户留在当前游戏中，不执行跳转；余额以同步结果为准，确保不丢失、不重复。</li>
+    <li>处理期间屏蔽侧边栏及游戏内的其他离开操作，避免并发触发多次结算。</li>
+  </ol>
+
+  <h2 id="s4" style="font-size:19px;color:#1b1340;margin:22px 0 8px;scroll-margin-top:16px">4. 后台需求</h2>
+  <p>菜单路径：<strong>活动配置 → 游戏快捷侧边栏管理</strong>。页面顶部提供币别选择，配置按币别站点独立生效。</p>
+  <ul>
+    <li><strong>底部操作栏</strong>：页面底部吸底固定显示"重置"与"保存配置"按钮，无论页面如何滚动均可随时点击；操作栏附提示"修改后需点击'保存配置'才会在前台生效"。</li>
+    <li><strong>保存配置</strong>：提交当前币别下全部配置，保存成功后给出提示，新进入游戏的用户读取新配置。</li>
+    <li><strong>重置</strong>：放弃未保存的修改，恢复为上次保存的配置。</li>
+  </ul>
+
+  <h3 id="s4-1" style="font-size:15.5px;margin:16px 0 6px;scroll-margin-top:16px">4.1 功能配置</h3>
+  <table style="width:100%;border-collapse:collapse;font-size:12.5px">
+    <thead><tr><th style="text-align:left;padding:7px 9px;background:#f1edfb;border:1px solid #ddd6f3;width:30%">配置项</th><th style="text-align:left;padding:7px 9px;background:#f1edfb;border:1px solid #ddd6f3;width:14%">默认</th><th style="text-align:left;padding:7px 9px;background:#f1edfb;border:1px solid #ddd6f3">说明</th></tr></thead>
+    <tbody>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">启用游戏快捷侧边栏</td><td style="padding:7px 9px;border:1px solid #e4e4ea">开</td><td style="padding:7px 9px;border:1px solid #e4e4ea">关闭后前台不展示浮标与侧边栏，自动展开同时失效。</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">启用退出时自动展开</td><td style="padding:7px 9px;border:1px solid #e4e4ea">开</td><td style="padding:7px 9px;border:1px solid #e4e4ea">总开关关闭时置灰不可操作。</td></tr>
+    </tbody>
+  </table>
+
+  <h3 id="s4-2" style="font-size:15.5px;margin:16px 0 6px;scroll-margin-top:16px">4.2 Banner 配置</h3>
+  <ul>
+    <li>区域总开关"展示 Banner"。</li>
+    <li>列表字段：排序、Banner 图（缩略图）、活动名称、是否展示（开关）、排序调整（上移 / 下移）、操作（删除）。</li>
+    <li>新增：弹窗展示平台现有活动 Banner 列表（仅当前平台展示中的活动），支持按活动名称搜索、多选；已添加的活动置灰不可重复选择；确认后追加到列表末尾，默认展示。</li>
+    <li>Banner 图片直接引用所选活动的现有 Banner，不在此处单独上传。</li>
+    <li>排序同时决定 Mini Banner 轮播顺序与活动列表页的置顶顺序。</li>
+    <li>活动在平台下架 / 结束后，自动从 Mini Banner 及置顶排序中移除，后台列表标记"已下架"。</li>
+  </ul>
+
+  <h3 id="s4-3" style="font-size:15.5px;margin:16px 0 6px;scroll-margin-top:16px">4.3 推荐游戏配置</h3>
+  <ul>
+    <li>展示数量：整数 1–30，默认 10。</li>
+    <li>添加游戏：弹窗支持按名称搜索、多选；已添加的游戏置灰不可选；确认后追加到列表末尾。</li>
+    <li>列表字段：
+      <ul>
+        <li>排序，附前台位次提示："前台第 N 位" / "超出展示数量"。</li>
+        <li>游戏图标、游戏名称、游戏类型。</li>
+        <li>游戏状态：正常 / 维护中 / 已下架，后两者附"前台不展示"提示。</li>
+        <li>排序调整（上移 / 下移）、删除。</li>
+      </ul>
+    </li>
+    <li>前台严格按后台排序展示，并自动跳过不可进入的游戏；位次提示需与此规则一致。</li>
+  </ul>
+
+  <h2 id="s5" style="font-size:19px;color:#1b1340;margin:22px 0 8px;scroll-margin-top:16px">5. 异常处理</h2>
+  <table style="width:100%;border-collapse:collapse;font-size:12.5px">
+    <thead><tr><th style="text-align:left;padding:7px 9px;background:#f1edfb;border:1px solid #ddd6f3;width:34%">场景</th><th style="text-align:left;padding:7px 9px;background:#f1edfb;border:1px solid #ddd6f3">处理</th></tr></thead>
+    <tbody>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">列表未同步，用户点击了已维护 / 下架的游戏</td><td style="padding:7px 9px;border:1px solid #e4e4ea">点击时校验游戏状态：弹窗提示"该游戏当前维护中"；刷新侧边栏推荐游戏列表（剔除该游戏，后续依次前移）；不退出、不刷新当前游戏，用户保持在当前游戏中；自动展开机会状态不变。</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">游戏下架 / 维护 / 不可进入</td><td style="padding:7px 9px;border:1px solid #e4e4ea">不展示该游戏，后续游戏依次前移。</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">推荐游戏不足 7 个</td><td style="padding:7px 9px;border:1px solid #e4e4ea">按实际数量展示；为 0 时显示无可用游戏提示。</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">游戏启动失败</td><td style="padding:7px 9px;border:1px solid #e4e4ea">Toast 提示游戏暂时不可用，侧边栏保持展开，解除点击锁。</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">推荐列表加载失败</td><td style="padding:7px 9px;border:1px solid #e4e4ea">保留 Home / Deposit / Reload / Banner；推荐区隐藏或显示加载失败及重试入口。</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">切换时当前局已投注未结算</td><td style="padding:7px 9px;border:1px solid #e4e4ea">显示 loading 蒙层并展示当前局结算过程；结算完成 → 余额同步 → 进入新游戏并同步结算后余额。结算超时的时长阈值待定。</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">连续点击多个游戏</td><td style="padding:7px 9px;border:1px solid #e4e4ea">仅处理第一次有效点击，切换完成或失败前其余点击无效。</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">Banner 图片加载失败</td><td style="padding:7px 9px;border:1px solid #e4e4ea">跳过该张；全部失败时隐藏 Banner 区域。</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">配置接口失败</td><td style="padding:7px 9px;border:1px solid #e4e4ea">不展示浮标，游戏正常运行，退出按平台现有流程执行。</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="s6" style="font-size:19px;color:#1b1340;margin:22px 0 8px;scroll-margin-top:16px">6. 数据埋点</h2>
+  <table style="width:100%;border-collapse:collapse;font-size:12.5px">
+    <thead><tr><th style="text-align:left;padding:7px 9px;background:#f1edfb;border:1px solid #ddd6f3;width:24%">事件</th><th style="text-align:left;padding:7px 9px;background:#f1edfb;border:1px solid #ddd6f3;width:40%">触发时机</th><th style="text-align:left;padding:7px 9px;background:#f1edfb;border:1px solid #ddd6f3">参数 / 指标</th></tr></thead>
+    <tbody>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">sidebar_float_impression</td><td style="padding:7px 9px;border:1px solid #e4e4ea">进入游戏且浮标展示</td><td style="padding:7px 9px;border:1px solid #e4e4ea">gameId；浮标曝光次数</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">sidebar_open</td><td style="padding:7px 9px;border:1px solid #e4e4ea">侧边栏展开</td><td style="padding:7px 9px;border:1px solid #e4e4ea">mode = manual / auto；手动 / 自动展开次数</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">sidebar_close</td><td style="padding:7px 9px;border:1px solid #e4e4ea">侧边栏收起</td><td style="padding:7px 9px;border:1px solid #e4e4ea">mode、closeBy = button / outside / exit_cancel；关闭次数、自动展开后关闭人数</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">rec_impression</td><td style="padding:7px 9px;border:1px solid #e4e4ea">侧边栏展开时推荐 Icon 进入可视区</td><td style="padding:7px 9px;border:1px solid #e4e4ea">gameId、position；推荐游戏曝光次数</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">rec_click</td><td style="padding:7px 9px;border:1px solid #e4e4ea">点击推荐 Icon</td><td style="padding:7px 9px;border:1px solid #e4e4ea">fromGameId、toGameId、position、mode；点击次数、点击率 = 点击 / 曝光</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">game_switch_result</td><td style="padding:7px 9px;border:1px solid #e4e4ea">切换完成</td><td style="padding:7px 9px;border:1px solid #e4e4ea">success / fail、errorCode；切换成功人数</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">rec_continue_play</td><td style="padding:7px 9px;border:1px solid #e4e4ea">推荐进入后的新游戏会话</td><td style="padding:7px 9px;border:1px solid #e4e4ea">推荐后继续游戏人数；继续投注人数、投注金额（服务端按会话归因）</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">exit_tap</td><td style="padding:7px 9px;border:1px solid #e4e4ea">用户触发退出</td><td style="padding:7px 9px;border:1px solid #e4e4ea">isFirst、afterAutoClose；关闭后二次退出人数</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">exit_confirm / exit_cancel</td><td style="padding:7px 9px;border:1px solid #e4e4ea">用户确认 / 取消退出</td><td style="padding:7px 9px;border:1px solid #e4e4ea">gameId、sidebarOpen</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">quick_action_click</td><td style="padding:7px 9px;border:1px solid #e4e4ea">点击 Home / Deposit / Reload</td><td style="padding:7px 9px;border:1px solid #e4e4ea">action</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">banner_impression / banner_click</td><td style="padding:7px 9px;border:1px solid #e4e4ea">Banner 轮播展示 / 点击</td><td style="padding:7px 9px;border:1px solid #e4e4ea">promoId、position（点击统一跳转活动列表页）</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top:8px">所有事件公共参数：userId、currency、gameId、sessionId、timestamp、device。</p>
+
+  <h2 id="s7" style="font-size:19px;color:#1b1340;margin:22px 0 8px;scroll-margin-top:16px">7. 核心流程</h2>
+  <ul>
+    <li><strong>正常使用</strong>：游戏中 → 点击浮标 → 展开侧边栏 → 使用快捷功能 / 切换游戏。</li>
+    <li><strong>退出推荐</strong>：进入游戏 → 首次退出 → 自动展开侧边栏 → 点击推荐游戏 → 进入新游戏。</li>
+    <li><strong>拒绝推荐</strong>：首次退出 → 自动展开 → 用户取消退出 / 收起侧边栏 → 再次退出 → 直接正常退出。</li>
+  </ul>
+
+  <h2 id="s8" style="font-size:19px;color:#1b1340;margin:22px 0 8px;scroll-margin-top:16px">8. 验收标准</h2>
+  <ul>
+    <li>每款游戏内自动展开最多触发 1 次；切换 / 重新进入游戏后可再次触发。</li>
+    <li>手动展开并关闭后，首次退出仍会自动展开。</li>
+    <li>推荐区首屏为 2 列 × 3.5 个，可滑动；无文字或标签。</li>
+    <li>视觉样式与动效与设计稿一致。</li>
+    <li>前台展示顺序、数量、过滤结果与后台位次提示一致。</li>
+    <li>快速连点多个推荐游戏只触发一次切换。</li>
+    <li>推荐游戏、Home、Deposit、Reload、Banner、确认退出均在当前游戏结算及余额同步完成后才执行；当前局未结算时先展示结算过程；前后余额一致。</li>
+    <li>Banner 每 5 秒切换；点击统一跳转活动列表页，Mini Banner 中的活动按其排序置于列表最前。</li>
+    <li>后台保存后，新进入游戏的用户读取到新配置。</li>
+  </ul>
+
+  <h2 id="s9" style="font-size:19px;color:#1b1340;margin:22px 0 8px;scroll-margin-top:16px">9. 待确认事项</h2>
+  <ol>
+    <li>活动列表页的置顶排序是否仅对从 Mini Banner 进入的访问生效，还是对所有访问生效。</li>
+    <li>游戏 Icon 需提供侧边栏专用素材（高清正方形 Icon）；活动 Banner 在窄版侧边栏中的裁切适配方式。</li>
+    <li>自动展开机会是否需要跨刷新持久化。</li>
+    <li>未结算局等待结算的超时时长，及哪些游戏需走"等待结算"流程（按供应商 / 游戏配置）。</li>
+  </ol>
+</doc-page>
+</x-dc>
+</body>
+</html>
