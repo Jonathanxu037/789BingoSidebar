@@ -18,7 +18,7 @@ a{color:#5a2fc4}a:hover{color:#00a07a}
 <doc-page size="a4" margin="0.7in" style="font-family:'PingFang SC','Microsoft YaHei','Helvetica Neue',sans-serif;font-size:13.5px;line-height:1.65;color:#1f2330">
   <h1 style="font-size:28px;margin:0 0 6px;color:#1b1340">游戏快捷侧边栏 PRD</h1>
   <div style="display:flex;flex-wrap:wrap;gap:6px 22px;color:#5b6070;font-size:12.5px;padding-bottom:14px;border-bottom:2px solid #7b3fe4;margin-bottom:18px">
-    <span>版本：v1.8</span><span>日期：2026-09-23</span><span>平台：789bingo（H5 游戏页 + 管理后台）</span><span>原型：<a href="index.html#prototype" target="_top">前台原型</a> · <a href="index.html#admin" target="_top">后台原型</a></span>
+    <span>版本：v1.16</span><span>日期：2026-09-23</span><span>平台：789bingo（H5 游戏页 + 管理后台）</span><span>原型：<a href="index.html#prototype" target="_top">前台原型</a> · <a href="index.html#admin" target="_top">后台原型</a></span>
   </div>
 
   <nav id="toc" style="margin:0 0 8px;padding:14px 18px;background:#f8f6fd;border:1px solid #e6e0f5;border-radius:6px">
@@ -33,11 +33,11 @@ a{color:#5a2fc4}a:hover{color:#00a07a}
       <a href="#s3-4" style="display:block;color:#4a4f60;padding:2px 0 2px 18px;font-size:12.5px">3.4 首次退出自动展开</a>
       <a href="#s3-5" style="display:block;color:#4a4f60;padding:2px 0 2px 18px;font-size:12.5px">3.5 退出自动展开规则</a>
       <a href="#s3-6" style="display:block;color:#4a4f60;padding:2px 0 2px 18px;font-size:12.5px">3.6 游戏切换</a>
-      <a href="#s3-7" style="display:block;color:#4a4f60;padding:2px 0 2px 18px;font-size:12.5px">3.7 Mini Banner 轮播与跳转</a>
+      <a href="#s3-7" style="display:block;color:#4a4f60;padding:2px 0 2px 18px;font-size:12.5px">3.7 Mini Banner</a>
       <a href="#s3-8" style="display:block;color:#4a4f60;padding:2px 0 2px 18px;font-size:12.5px">3.8 离开当前游戏的余额保障（通用规则）</a>
       <a href="#s4" style="display:block;font-weight:700;color:#1b1340;padding:3px 0;margin-top:4px">4. 后台需求</a>
       <a href="#s4-1" style="display:block;color:#4a4f60;padding:2px 0 2px 18px;font-size:12.5px">4.1 功能配置</a>
-      <a href="#s4-2" style="display:block;color:#4a4f60;padding:2px 0 2px 18px;font-size:12.5px">4.2 Banner 配置</a>
+      <a href="#s4-2" style="display:block;color:#4a4f60;padding:2px 0 2px 18px;font-size:12.5px">4.2 Mini Banner 配置</a>
       <a href="#s4-3" style="display:block;color:#4a4f60;padding:2px 0 2px 18px;font-size:12.5px">4.3 推荐游戏配置</a>
       <a href="#s5" style="display:block;font-weight:700;color:#1b1340;padding:3px 0;margin-top:4px">5. 异常处理</a>
       <a href="#s6" style="display:block;font-weight:700;color:#1b1340;padding:3px 0;margin-top:4px">6. 数据埋点</a>
@@ -52,7 +52,7 @@ a{color:#5a2fc4}a:hover{color:#00a07a}
   <ul>
     <li>提升游戏间切换率与推荐后继续投注。</li>
     <li>降低"退出即流失"比例。</li>
-    <li>为活动 Banner 提供游戏内曝光位，并将流量导入 Promotions 页。</li>
+    <li>为活动提供游戏内曝光位，并将流量导入活动详情页或指定页面。</li>
   </ul>
 
   <h2 id="s2" style="font-size:19px;color:#1b1340;margin:22px 0 8px;scroll-margin-top:16px">2. 名词说明</h2>
@@ -94,7 +94,8 @@ a{color:#5a2fc4}a:hover{color:#00a07a}
 
   <h3 id="s3-4" style="font-size:15.5px;margin:16px 0 6px;scroll-margin-top:16px">3.4 首次退出自动展开</h3>
   <ul>
-    <li>游戏内退出入口、退出操作及二次确认弹窗沿用平台现有实现，本需求不做调整。</li>
+    <li>游戏内退出入口、退出操作沿用平台现有实现，本需求不做调整。</li>
+    <li><strong>退出二次确认页面不做任何修改</strong>：用户在前台点击退出时弹出的二次确认页面，其样式、文案、按钮及交互均保持当前线上版本，本需求不涉及。</li>
     <li>用户在当前游戏内首次触发退出时，在平台现有退出流程基础上自动展开侧边栏；用户可直接点击推荐游戏切换。</li>
   </ul>
   <h3 id="s3-5" style="font-size:15.5px;margin:16px 0 6px;scroll-margin-top:16px">3.5 退出自动展开规则</h3>
@@ -112,9 +113,9 @@ a{color:#5a2fc4}a:hover{color:#00a07a}
       <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">后台关闭"退出时自动展开"</td><td style="padding:7px 9px;border:1px solid #e4e4ea">退出按平台现有流程执行；浮标与手动展开不受影响。</td></tr>
     </tbody>
   </table>
-  <p style="margin-top:8px">状态以"用户 + 当前游戏会话"为维度保存在前端内存中，刷新页面视为重新进入游戏。</p>
+  <p style="margin-top:8px">自动展开机会以"用户 + 当前游戏"为维度记录。用户在当前游戏内刷新页面（含断线重连后重新加载）不影响该机制：已使用的机会不会因刷新而重置，未使用的机会刷新后仍保留；仅在切换至其他游戏或从大厅重新进入游戏时重置。</p>
 
-  <h3 id="s3-6" style="font-size:15.5px;margin:16px 0 6px;scroll-margin-top:16px">3.6 游戏切换</h3>
+  <h3 id="s3-6" style="font-size:15.5px;margin:16px 0 6px;scroll-margin-top:16px">3.6 游戏切换<span style="display:inline-block;margin-left:8px;padding:1px 8px;border-radius:3px;background:#fff1e0;border:1px solid #f5a623;color:#b35c00;font-size:11.5px;font-weight:700;vertical-align:2px">待研发确认三方游戏跳转结算机制</span></h3>
   <p><strong>切换逻辑</strong></p>
   <ol>
     <li>用户点击推荐游戏列表中的游戏 Icon → 锁定点击（仅处理第一次有效点击）。</li>
@@ -123,13 +124,13 @@ a{color:#5a2fc4}a:hover{color:#00a07a}
     <li>启动失败：提示游戏暂时不可用，侧边栏保持展开，解锁可重新选择。</li>
     <li>所选游戏已维护 / 下架（侧边栏列表未及时同步）：不退出当前游戏，弹窗提示"该游戏当前维护中"，同时刷新侧边栏推荐游戏列表；用户仍停留在当前游戏中，游戏不中断。</li>
   </ol>
-  <p><strong>余额结算与同步</strong></p>
+  <p><strong>余额结算与同步</strong><span style="display:inline-block;margin-left:8px;padding:1px 8px;border-radius:3px;background:#fff1e0;border:1px solid #f5a623;color:#b35c00;font-size:11.5px;font-weight:700;vertical-align:2px">待研发确认三方游戏跳转结算机制</span></p>
   <ol>
     <li>退出当前游戏时，按平台现有规则对该第三方游戏的用户余额与平台余额进行结算同步。</li>
     <li>进入新游戏时，按平台现有规则将用户账户余额同步至新游戏对应的第三方供应商。</li>
     <li>须在当前游戏结算同步完成后，再发起新游戏的余额同步与启动；任一环节失败按"启动失败"处理，并确保用户余额不丢失、不重复。</li>
   </ol>
-  <p><strong>当前局未结算时的切换</strong></p>
+  <p><strong>当前局未结算时的切换</strong><span style="display:inline-block;margin-left:8px;padding:1px 8px;border-radius:3px;background:#fff1e0;border:1px solid #f5a623;color:#b35c00;font-size:11.5px;font-weight:700;vertical-align:2px">待研发确认三方游戏跳转结算机制</span></p>
   <p>部分游戏在用户已投注、当前局尚未结算时点击推荐游戏，为避免第三方游戏平台与我方平台的用户余额不一致，按以下流程处理：</p>
   <ol>
     <li>保持当前游戏画面，显示 loading 蒙层（半透明，用户可透过蒙层看到当前局的结算过程与结果），期间屏蔽其他操作及重复点击。</li>
@@ -139,15 +140,15 @@ a{color:#5a2fc4}a:hover{color:#00a07a}
     <li>任一环节失败（结算超时、同步失败、新游戏启动失败）：关闭蒙层，提示游戏暂时不可用，用户留在当前游戏中，余额以同步后的结果为准。</li>
   </ol>
 
-  <h3 id="s3-7" style="font-size:15.5px;margin:16px 0 6px;scroll-margin-top:16px">3.7 Mini Banner 轮播与跳转</h3>
+  <h3 id="s3-7" style="font-size:15.5px;margin:16px 0 6px;scroll-margin-top:16px">3.7 Mini Banner</h3>
   <ul>
-    <li>Banner 来源于平台现有活动 Banner 列表（仅包含当前平台上展示中的活动），由后台选择；前台展示"是否展示 = 是"的 Banner，按后台排序轮播，每 5 秒自动切换。</li>
-    <li>点击 Mini Banner 任意位置均不跳转至单个活动详情页，统一在完成当前游戏结算与余额同步（见 3.8）后跳转至 Promotions 活动列表页：<code style="font-size:12px;background:#f4f2fa;padding:1px 5px;border-radius:3px">https://789bingo.com/promo</code>。</li>
-    <li>活动列表页排序：Mini Banner 中配置展示的活动排序优先级最高，按 Mini Banner 的后台排序依次置于列表最前；其余活动保持平台原有排序展示在后。</li>
-    <li>后台 Banner 总开关关闭或无可展示 Banner 时，隐藏该区域。</li>
+    <li>Mini Banner 仅展示 1 个活动，不轮播；内容由后台配置（见 4.2）。</li>
+    <li>展示图片为后台为该活动单独上传的 Mini Banner 图，不使用活动原有 Banner。</li>
+    <li>点击后先完成当前游戏结算与余额同步（见 3.8），再按后台配置的跳转方式跳转（二选一）：<ul><li>选择活动：跳转至所选活动的详情页。</li><li>自定义跳转链接：直接跳转至该链接地址。</li></ul></li>
+    <li>以下情况隐藏 Mini Banner 区域：后台"是否展示"关闭；未上传图片或未配置跳转目标；跳转方式为"选择活动"且活动已下架 / 结束；图片加载失败。</li>
   </ul>
 
-  <h3 id="s3-8" style="font-size:15.5px;margin:16px 0 6px;scroll-margin-top:16px">3.8 离开当前游戏的余额保障（通用规则）</h3>
+  <h3 id="s3-8" style="font-size:15.5px;margin:16px 0 6px;scroll-margin-top:16px">3.8 离开当前游戏的余额保障（通用规则）<span style="display:inline-block;margin-left:8px;padding:1px 8px;border-radius:3px;background:#fff1e0;border:1px solid #f5a623;color:#b35c00;font-size:11.5px;font-weight:700;vertical-align:2px">待研发确认三方游戏跳转结算机制</span></h3>
   <p>凡是会关闭当前游戏、从当前游戏直接跳转离开或需要读取最新余额的操作，均须先完成当前游戏结算，并统一第三方游戏平台与我方平台的用户账户余额，遵循 3.6 中"余额结算与同步"及"当前局未结算时的切换"规则，包括但不限于：</p>
   <table style="width:100%;border-collapse:collapse;font-size:12.5px">
     <thead><tr><th style="text-align:left;padding:7px 9px;background:#f1edfb;border:1px solid #ddd6f3;width:34%">触发操作</th><th style="text-align:left;padding:7px 9px;background:#f1edfb;border:1px solid #ddd6f3">离开后去向</th></tr></thead>
@@ -156,7 +157,7 @@ a{color:#5a2fc4}a:hover{color:#00a07a}
       <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">快捷功能 Home</td><td style="padding:7px 9px;border:1px solid #e4e4ea">平台首页</td></tr>
       <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">快捷功能 Deposit</td><td style="padding:7px 9px;border:1px solid #e4e4ea">充值页</td></tr>
       <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">快捷功能 Reload</td><td style="padding:7px 9px;border:1px solid #e4e4ea">刷新并展示结算同步后的最新余额</td></tr>
-      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">点击 Mini Banner</td><td style="padding:7px 9px;border:1px solid #e4e4ea">Promotions 列表页</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">点击 Mini Banner</td><td style="padding:7px 9px;border:1px solid #e4e4ea">活动详情页 / 后台配置的跳转链接</td></tr>
       <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">自动展开后用户确认退出 / 关闭游戏</td><td style="padding:7px 9px;border:1px solid #e4e4ea">按平台现有退出去向</td></tr>
     </tbody>
   </table>
@@ -185,15 +186,18 @@ a{color:#5a2fc4}a:hover{color:#00a07a}
     </tbody>
   </table>
 
-  <h3 id="s4-2" style="font-size:15.5px;margin:16px 0 6px;scroll-margin-top:16px">4.2 Banner 配置</h3>
-  <ul>
-    <li>区域总开关"展示 Banner"。</li>
-    <li>列表字段：排序、Banner 图（缩略图）、活动名称、是否展示（开关）、排序调整（上移 / 下移）、操作（删除）。</li>
-    <li>新增：弹窗展示平台现有活动 Banner 列表（仅当前平台展示中的活动），支持按活动名称搜索、多选；已添加的活动置灰不可重复选择；确认后追加到列表末尾，默认展示。</li>
-    <li>Banner 图片直接引用所选活动的现有 Banner，不在此处单独上传。</li>
-    <li>排序同时决定 Mini Banner 轮播顺序与活动列表页的置顶顺序。</li>
-    <li>活动在平台下架 / 结束后，自动从 Mini Banner 及置顶排序中移除，后台列表标记"已下架"。</li>
-  </ul>
+  <h3 id="s4-2" style="font-size:15.5px;margin:16px 0 6px;scroll-margin-top:16px">4.2 Mini Banner 配置</h3>
+  <table style="width:100%;border-collapse:collapse;font-size:12.5px">
+    <thead><tr><th style="text-align:left;padding:7px 9px;background:#f1edfb;border:1px solid #ddd6f3;width:24%">配置项</th><th style="text-align:left;padding:7px 9px;background:#f1edfb;border:1px solid #ddd6f3">说明</th></tr></thead>
+    <tbody>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">是否展示</td><td style="padding:7px 9px;border:1px solid #e4e4ea">开关，默认开。</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">跳转方式（必填）</td><td style="padding:7px 9px;border:1px solid #e4e4ea">单选，二选一：选择活动 / 自定义跳转链接，默认选择活动。</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">选择活动</td><td style="padding:7px 9px;border:1px solid #e4e4ea">跳转方式为"选择活动"时必填；下拉单选，选项为当前平台已有且展示中的活动；点击跳转该活动详情页。</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">跳转链接</td><td style="padding:7px 9px;border:1px solid #e4e4ea">跳转方式为"自定义跳转链接"时必填；需以 http(s):// 开头，保存时校验格式；点击直接跳转至该地址。</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">Mini Banner 图（必填）</td><td style="padding:7px 9px;border:1px solid #e4e4ea">为该活动单独上传在 Mini Banner 位置展示的图片；支持预览、重新上传、删除。图片尺寸、格式及大小规格待设计师确认设计稿后同步确认。</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top:8px">"是否展示"开启时，未上传图片、或未填写当前跳转方式对应的必填项，不允许保存并给出提示。跳转方式为"选择活动"且该活动在平台下架 / 结束后，前台自动隐藏 Mini Banner，后台需重新配置。</p>
 
   <h3 id="s4-3" style="font-size:15.5px;margin:16px 0 6px;scroll-margin-top:16px">4.3 推荐游戏配置</h3>
   <ul>
@@ -219,9 +223,9 @@ a{color:#5a2fc4}a:hover{color:#00a07a}
       <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">推荐游戏不足 7 个</td><td style="padding:7px 9px;border:1px solid #e4e4ea">按实际数量展示；为 0 时显示无可用游戏提示。</td></tr>
       <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">游戏启动失败</td><td style="padding:7px 9px;border:1px solid #e4e4ea">Toast 提示游戏暂时不可用，侧边栏保持展开，解除点击锁。</td></tr>
       <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">推荐列表加载失败</td><td style="padding:7px 9px;border:1px solid #e4e4ea">保留 Home / Deposit / Reload / Banner；推荐区隐藏或显示加载失败及重试入口。</td></tr>
-      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">切换时当前局已投注未结算</td><td style="padding:7px 9px;border:1px solid #e4e4ea">显示 loading 蒙层并展示当前局结算过程；结算完成 → 余额同步 → 进入新游戏并同步结算后余额。结算超时的时长阈值待定。</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">切换时当前局已投注未结算<span style="display:inline-block;margin-left:8px;padding:1px 8px;border-radius:3px;background:#fff1e0;border:1px solid #f5a623;color:#b35c00;font-size:11.5px;font-weight:700;vertical-align:2px">待研发确认三方游戏跳转结算机制</span></td><td style="padding:7px 9px;border:1px solid #e4e4ea">显示 loading 蒙层并展示当前局结算过程；结算完成 → 余额同步 → 进入新游戏并同步结算后余额。结算超时的时长阈值待定。</td></tr>
       <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">连续点击多个游戏</td><td style="padding:7px 9px;border:1px solid #e4e4ea">仅处理第一次有效点击，切换完成或失败前其余点击无效。</td></tr>
-      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">Banner 图片加载失败</td><td style="padding:7px 9px;border:1px solid #e4e4ea">跳过该张；全部失败时隐藏 Banner 区域。</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">Mini Banner 图片加载失败 / 活动已下架</td><td style="padding:7px 9px;border:1px solid #e4e4ea">隐藏 Mini Banner 区域，其余模块正常展示。</td></tr>
       <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">配置接口失败</td><td style="padding:7px 9px;border:1px solid #e4e4ea">不展示浮标，游戏正常运行，退出按平台现有流程执行。</td></tr>
     </tbody>
   </table>
@@ -240,7 +244,7 @@ a{color:#5a2fc4}a:hover{color:#00a07a}
       <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">exit_tap</td><td style="padding:7px 9px;border:1px solid #e4e4ea">用户触发退出</td><td style="padding:7px 9px;border:1px solid #e4e4ea">isFirst、afterAutoClose；关闭后二次退出人数</td></tr>
       <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">exit_confirm / exit_cancel</td><td style="padding:7px 9px;border:1px solid #e4e4ea">用户确认 / 取消退出</td><td style="padding:7px 9px;border:1px solid #e4e4ea">gameId、sidebarOpen</td></tr>
       <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">quick_action_click</td><td style="padding:7px 9px;border:1px solid #e4e4ea">点击 Home / Deposit / Reload</td><td style="padding:7px 9px;border:1px solid #e4e4ea">action</td></tr>
-      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">banner_impression / banner_click</td><td style="padding:7px 9px;border:1px solid #e4e4ea">Banner 轮播展示 / 点击</td><td style="padding:7px 9px;border:1px solid #e4e4ea">promoId、position（点击统一跳转活动列表页）</td></tr>
+      <tr><td style="padding:7px 9px;border:1px solid #e4e4ea">banner_impression / banner_click</td><td style="padding:7px 9px;border:1px solid #e4e4ea">Mini Banner 展示 / 点击</td><td style="padding:7px 9px;border:1px solid #e4e4ea">promoId、targetUrl、linkType = detail / custom</td></tr>
     </tbody>
   </table>
   <p style="margin-top:8px">所有事件公共参数：userId、currency、gameId、sessionId、timestamp、device。</p>
@@ -254,23 +258,20 @@ a{color:#5a2fc4}a:hover{color:#00a07a}
 
   <h2 id="s8" style="font-size:19px;color:#1b1340;margin:22px 0 8px;scroll-margin-top:16px">8. 验收标准</h2>
   <ul>
-    <li>每款游戏内自动展开最多触发 1 次；切换 / 重新进入游戏后可再次触发。</li>
+    <li>每款游戏内自动展开最多触发 1 次，刷新页面不重置；切换 / 从大厅重新进入游戏后可再次触发。</li>
     <li>手动展开并关闭后，首次退出仍会自动展开。</li>
     <li>推荐区首屏为 2 列 × 3.5 个，可滑动；无文字或标签。</li>
     <li>视觉样式与动效与设计稿一致。</li>
     <li>前台展示顺序、数量、过滤结果与后台位次提示一致。</li>
     <li>快速连点多个推荐游戏只触发一次切换。</li>
-    <li>推荐游戏、Home、Deposit、Reload、Banner、确认退出均在当前游戏结算及余额同步完成后才执行；当前局未结算时先展示结算过程；前后余额一致。</li>
-    <li>Banner 每 5 秒切换；点击统一跳转活动列表页，Mini Banner 中的活动按其排序置于列表最前。</li>
+    <li>推荐游戏、Home、Deposit、Reload、Banner、确认退出均在当前游戏结算及余额同步完成后才执行；当前局未结算时先展示结算过程；前后余额一致。<span style="display:inline-block;margin-left:8px;padding:1px 8px;border-radius:3px;background:#fff1e0;border:1px solid #f5a623;color:#b35c00;font-size:11.5px;font-weight:700;vertical-align:2px">待研发确认三方游戏跳转结算机制</span></li>
+    <li>Mini Banner 仅展示后台配置的 1 个活动图片、不轮播；按后台跳转方式跳转活动详情页或自定义链接（二选一）。</li>
     <li>后台保存后，新进入游戏的用户读取到新配置。</li>
   </ul>
 
   <h2 id="s9" style="font-size:19px;color:#1b1340;margin:22px 0 8px;scroll-margin-top:16px">9. 待确认事项</h2>
   <ol>
-    <li>活动列表页的置顶排序是否仅对从 Mini Banner 进入的访问生效，还是对所有访问生效。</li>
-    <li>游戏 Icon 需提供侧边栏专用素材（高清正方形 Icon）；活动 Banner 在窄版侧边栏中的裁切适配方式。</li>
-    <li>自动展开机会是否需要跨刷新持久化。</li>
-    <li>未结算局等待结算的超时时长，及哪些游戏需走"等待结算"流程（按供应商 / 游戏配置）。</li>
+    <li><strong style="color:#b35c00">待研发确认三方游戏跳转结算机制</strong>：各第三方供应商在退出 / 跳转时的结算与余额同步方式、未结算局的判断与等待机制、失败回滚方案（涉及 3.6、3.8 及相关异常处理）。</li>
   </ol>
 </doc-page>
 </x-dc>

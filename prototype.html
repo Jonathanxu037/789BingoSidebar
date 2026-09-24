@@ -44,7 +44,7 @@ a{color:#7aa2ff}a:hover{color:#a9c2ff}
       </sc-if>
 
       <sc-if value="{{ showFloat }}" hint-placeholder-val="{{ true }}">
-        <button onClick="{{ onFloat }}" title="Open quick sidebar" style="position:absolute;right:10px;top:30px;z-index:3;transition:transform .3s cubic-bezier(.34,1.56,.64,1),opacity .2s;transition-delay:{{ floatDelay }};transform:{{ floatTransform }};opacity:{{ floatOpacity }};pointer-events:{{ floatPointer }};width:46px;height:46px;border-radius:50%;border:3px solid transparent;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#7b3fe4,#00d9a0) border-box;padding:0;cursor:pointer;box-shadow:0 4px 16px rgba(123,63,228,.55),0 2px 8px rgba(0,217,160,.35);display:flex;align-items:center;justify-content:center;overflow:hidden"><img src="assets/789bingo-logo.png" alt="789bingo" style="width:34px;height:auto;display:block"></button>
+        <button onClick="{{ onFloat }}" onPointerDown="{{ onFloatDown }}" title="Open quick sidebar" style="position:absolute;left:{{ fx }};top:{{ fy }};z-index:6;touch-action:none;user-select:none;-webkit-user-drag:none;transition:{{ floatTrans }};transition-delay:{{ floatDelay }};transform:{{ floatTransform }};opacity:{{ floatOpacity }};pointer-events:{{ floatPointer }};width:46px;height:46px;border-radius:50%;border:3px solid transparent;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#7b3fe4,#00d9a0) border-box;padding:0;cursor:pointer;box-shadow:0 4px 16px rgba(123,63,228,.55),0 2px 8px rgba(0,217,160,.35);display:flex;align-items:center;justify-content:center;overflow:hidden"><img src="assets/789bingo-logo.png" alt="789bingo" draggable="false" style="width:34px;height:auto;display:block;pointer-events:none"></button>
       </sc-if>
       <sc-if value="{{ isOpen }}" hint-placeholder-val="{{ false }}">
         <div onClick="{{ onClose }}" style="position:absolute;inset:0;background:transparent"></div>
@@ -60,13 +60,13 @@ a{color:#7aa2ff}a:hover{color:#a9c2ff}
           </div>
         </div>
       </sc-if>
-      <div style="position:absolute;top:20px;right:0;width:140px;transition:clip-path .5s cubic-bezier(.65,0,.35,1);clip-path:{{ sbClip }};pointer-events:{{ sbPointer }};background:linear-gradient(180deg,rgba(92,42,210,.97) 0%,rgba(40,20,110,.97) 38%,rgba(10,52,62,.97) 100%) padding-box,linear-gradient(180deg,#a47bff,#00d9a0) border-box;border:2px solid transparent;border-right:none;border-radius:18px 0 0 18px;padding:10px 10px 12px 12px;display:flex;flex-direction:column;gap:10px;box-shadow:-10px 10px 30px rgba(0,0,0,.5);backdrop-filter:blur(6px)">
-        <button onClick="{{ onClose }}" title="Hide sidebar" style="position:absolute;left:-16px;top:28px;z-index:2;width:30px;height:30px;border-radius:50%;padding:3px;border:none;background:linear-gradient(145deg,#f3ecff 0%,#b99bff 40%,#5ee8c2 100%);cursor:pointer;box-shadow:0 4px 10px rgba(20,8,60,.6),0 0 0 1px rgba(40,16,100,.6),0 0 12px rgba(0,217,160,.35);transition:transform .15s" style-hover="transform:scale(1.08)" style-active="transform:scale(.94)">
+      <div ref="{{ sbRef }}" style="position:absolute;top:{{ sbTop }};left:{{ sbLeft }};width:140px;transition:clip-path .5s cubic-bezier(.65,0,.35,1);clip-path:{{ sbClip }};pointer-events:{{ sbPointer }};background:linear-gradient(180deg,rgba(92,42,210,.97) 0%,rgba(40,20,110,.97) 38%,rgba(10,52,62,.97) 100%) padding-box,linear-gradient(180deg,#a47bff,#00d9a0) border-box;border:2px solid transparent;border-left:{{ sbBL }};border-right:{{ sbBR }};border-radius:{{ sbRadius }};padding:{{ sbPad }};display:flex;flex-direction:column;gap:10px;box-shadow:{{ sbShadow }};backdrop-filter:blur(6px)">
+        <button onClick="{{ onClose }}" title="Hide sidebar" style="position:absolute;left:{{ cbLeft }};top:28px;z-index:2;width:30px;height:30px;border-radius:50%;padding:3px;border:none;background:linear-gradient(145deg,#f3ecff 0%,#b99bff 40%,#5ee8c2 100%);cursor:pointer;box-shadow:0 4px 10px rgba(20,8,60,.6),0 0 0 1px rgba(40,16,100,.6),0 0 12px rgba(0,217,160,.35);transition:transform .15s" style-hover="transform:scale(1.08)" style-active="transform:scale(.94)">
           <span style="position:relative;display:flex;align-items:center;justify-content:center;width:100%;height:100%;border-radius:50%;background:radial-gradient(120% 90% at 30% 15%,rgba(255,255,255,.55) 0%,rgba(255,255,255,0) 45%),linear-gradient(160deg,#8a4dff 0%,#5a24c8 50%,#0fae8a 100%);box-shadow:inset 0 1px 1px rgba(255,255,255,.6),inset 0 -2px 3px rgba(10,30,40,.45);color:#fff">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="filter:drop-shadow(0 1px 1px rgba(20,8,60,.6))"><path d="M6 6l6 6-6 6" stroke-width="2.8" opacity=".55"></path><path d="M12 6l6 6-6 6" stroke-width="2.8"></path></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="filter:drop-shadow(0 1px 1px rgba(20,8,60,.6));transform:{{ cbFlip }}"><path d="M6 6l6 6-6 6" stroke-width="2.8" opacity=".55"></path><path d="M12 6l6 6-6 6" stroke-width="2.8"></path></svg>
           </span>
         </button>
-        <div style="margin:-10px -10px 0 -12px;height:66px;border-radius:16px 0 0 0;margin-bottom:-28px;background:linear-gradient(180deg,rgba(92,42,210,0) 0%,rgba(92,42,210,.35) 35%,rgba(92,42,210,.8) 65%,rgba(92,42,210,.97) 100%),linear-gradient(90deg,#7b3fe4,#00d9a0);display:flex;justify-content:center;overflow:hidden">
+        <div style="margin:{{ hdMargin }};height:66px;border-radius:{{ hdRadius }};margin-bottom:-28px;background:linear-gradient(180deg,rgba(92,42,210,0) 0%,rgba(92,42,210,.35) 35%,rgba(92,42,210,.8) 65%,rgba(92,42,210,.97) 100%),linear-gradient(90deg,#7b3fe4,#00d9a0);display:flex;justify-content:center;overflow:hidden">
           <div style="position:relative;display:flex;align-items:baseline;gap:1px;font-family:'Figtree';font-style:italic;font-weight:800;padding-top:12px">
             <span style="font-size:26px;letter-spacing:-.04em;padding:0 4px 0 2px;margin-right:-3px;background:linear-gradient(180deg,#fff6c8 0%,#ffd54a 45%,#f29a1a 55%,#ffcf4a 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:.6px #7a3a00;filter:drop-shadow(0 2px 0 #3d1580) drop-shadow(0 3px 4px rgba(20,8,60,.5))">789</span>
             <span style="font-size:15px;font-weight:900;letter-spacing:.05em;color:#fff;-webkit-text-stroke:.9px #fff;paint-order:stroke fill;text-shadow:0 1.5px 0 #3d1580,0 0 8px rgba(0,217,160,.9)">BINGO</span>
@@ -101,15 +101,8 @@ a{color:#7aa2ff}a:hover{color:#a9c2ff}
         </div>
         <sc-if value="{{ showBanner }}" hint-placeholder-val="{{ true }}">
           <div onClick="{{ onBanner }}" title="View promotions" style="position:relative;aspect-ratio:5/2;border-radius:10px;overflow:hidden;cursor:pointer;box-shadow:0 0 0 1px rgba(255,255,255,.3),0 3px 8px rgba(0,0,0,.35)">
-            <sc-for list="{{ banners }}" as="b" hint-placeholder-count="3">
-              <img src="{{ b.src }}" alt="Promotion" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .6s ease;opacity:{{ b.opacity }}">
-            </sc-for>
+            <img src="assets/banner-1.png" alt="Promotion" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
             <div style="position:absolute;right:3px;bottom:3px;width:13px;height:13px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(20,10,50,.45);backdrop-filter:blur(3px);box-shadow:0 0 0 1px rgba(255,255,255,.55);color:#fff"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg></div>
-            <div style="position:absolute;left:0;right:0;bottom:3px;display:flex;justify-content:center;gap:3px">
-              <sc-for list="{{ banners }}" as="b" hint-placeholder-count="3">
-                <span style="height:3px;border-radius:2px;background:#fff;transition:all .3s;width:{{ b.dotW }};opacity:{{ b.dotOp }}"></span>
-              </sc-for>
-            </div>
           </div>
         </sc-if>
         <div style="display:flex;flex-direction:column;gap:6px">
@@ -180,7 +173,7 @@ a{color:#7aa2ff}a:hover{color:#a9c2ff}
   </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;enabled&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;功能配置&quot;,&quot;label&quot;:&quot;启用游戏快捷侧边栏&quot;},&quot;autoExpand&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;功能配置&quot;,&quot;label&quot;:&quot;启用退出时自动展开&quot;},&quot;showBanner&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Banner 配置&quot;,&quot;label&quot;:&quot;展示 Banner&quot;},&quot;displayCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:10,&quot;min&quot;:0,&quot;max&quot;:10,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;推荐游戏配置&quot;,&quot;label&quot;:&quot;展示数量&quot;},&quot;simulateListError&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;异常模拟&quot;,&quot;label&quot;:&quot;模拟推荐列表加载失败&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;enabled&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;功能配置&quot;,&quot;label&quot;:&quot;启用游戏快捷侧边栏&quot;},&quot;autoExpand&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;功能配置&quot;,&quot;label&quot;:&quot;启用退出时自动展开&quot;},&quot;showBanner&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Banner 配置&quot;,&quot;label&quot;:&quot;展示 Banner&quot;},&quot;bannerLink&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Banner 配置&quot;,&quot;label&quot;:&quot;跳转链接（留空跳活动详情页）&quot;},&quot;displayCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:10,&quot;min&quot;:0,&quot;max&quot;:10,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;推荐游戏配置&quot;,&quot;label&quot;:&quot;展示数量&quot;},&quot;simulateListError&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;异常模拟&quot;,&quot;label&quot;:&quot;模拟推荐列表加载失败&quot;}}">
 const GAMES = [
   { id: 'wukong', name: 'Black Wukong', hue: 30, status: 'ok' },
   { id: 'dragon-tiger', name: 'D Dragon Tiger', hue: 350, status: 'ok' },
@@ -205,10 +198,44 @@ const PROMOS = [
   { id: 'level-up-rewards', src: 'assets/banner-3.png' },
 ];
 class Component extends DCLogic {
-  state = { menu: false, confirm: false, muted: false, bIdx: 0, game: 'wukong', screen: 'game', open: false, mode: null, autoUsed: false, closedAfterAuto: false, lock: false, toast: '', loadingId: null, retryOk: false, m: zero(), log: [] };
+  state = { fx: 345, fy: 30, dragging: false, tucked: false, menu: false, confirm: false, muted: false, bIdx: 0, game: 'wukong', screen: 'game', open: false, mode: null, autoUsed: false, closedAfterAuto: false, lock: false, toast: '', loadingId: null, retryOk: false, m: zero(), log: [] };
 
-  componentDidMount() { this._bt = setInterval(() => this.setState(s => ({ bIdx: (s.bIdx + 1) % 3 })), 5000); }
-  componentWillUnmount() { clearInterval(this._bt); }
+  componentDidMount() { this.armIdle(); }
+  componentWillUnmount() { clearInterval(this._bt); clearTimeout(this._idle); this.endDrag && this.endDrag(); }
+  armIdle() {
+    clearTimeout(this._idle);
+    this._idle = setTimeout(() => { if (!this.state.open && !this.state.dragging) { this.setState({ tucked: true }); this.ev('浮标闲置 15s → 贴边隐藏'); } }, 15000);
+  }
+  componentDidUpdate(pp, ps) {
+    if (ps.open && !this.state.open) this.armIdle();
+    if (!ps.open && this.state.open) { clearTimeout(this._idle); if (this.state.tucked) this.setState({ tucked: false }); }
+  }
+  floatDown(e) {
+    clearTimeout(this._idle);
+    this._wasTucked = this.state.tucked;
+    if (this.state.tucked) this.setState({ tucked: false });
+    const W = 401, H = 863, S = 46, M = 10;
+    const sx = e.clientX, sy = e.clientY, ox = this.state.fx, oy = this.state.fy;
+    this._moved = false;
+    const move = ev => {
+      const dx = ev.clientX - sx, dy = ev.clientY - sy;
+      if (!this._moved && Math.hypot(dx, dy) < 5) return;
+      this._moved = true;
+      this.setState({ dragging: true, fx: Math.max(0, Math.min(W - S, ox + dx)), fy: Math.max(0, Math.min(H - S, oy + dy)) });
+    };
+    const up = () => {
+      this.endDrag();
+      this.armIdle();
+      if (!this._moved) return;
+      const cx = this.state.fx + S / 2;
+      const fx = cx < W / 2 ? M : W - S - M;
+      const fy = Math.max(30, Math.min(H - S - 30, this.state.fy));
+      this.setState({ dragging: false, fx, fy });
+      this.ev('浮标拖动 → 吸附' + (fx === M ? '左' : '右') + '侧');
+    };
+    this.endDrag = () => { window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up); window.removeEventListener('pointercancel', up); this.endDrag = null; };
+    window.addEventListener('pointermove', move); window.addEventListener('pointerup', up); window.addEventListener('pointercancel', up);
+  }
   ev(name, patch) {
     const t = new Date().toTimeString().slice(0, 8);
     this.setState(s => {
@@ -286,7 +313,18 @@ class Component extends DCLogic {
       curGameName: cur.name, curGameBg: gbg(cur), loadingName: ld.name, loadingBg: gbg(ld),
       showFloat: enabled,
       floatTransform: s.open ? 'scale(.4) rotate(-90deg)' : 'scale(1) rotate(0deg)', floatOpacity: s.open ? 0 : 1, floatPointer: s.open ? 'none' : 'auto', floatDelay: s.open ? '0s' : '.32s',
-      sbClip: s.open ? 'circle(170% at calc(100% - 33px) 33px)' : 'circle(0px at calc(100% - 33px) 33px)',
+      ...(() => { const L = s.fx < 200, sbL = L ? 0 : 261, h = this._sbH || 380, top = Math.max(20, Math.min(863 - h - 20, s.fy - 10)); return {
+        sbClip: `circle(${s.open ? 1100 : 0}px at ${s.fx + 23 - sbL}px ${s.fy + 23 - top}px)`,
+        sbTop: top + 'px', sbLeft: sbL + 'px',
+        sbBL: L ? 'none' : '2px solid transparent', sbBR: L ? '2px solid transparent' : 'none',
+        sbRadius: L ? '0 18px 18px 0' : '18px 0 0 18px', sbPad: L ? '10px 12px 12px 10px' : '10px 10px 12px 12px',
+        sbShadow: L ? '10px 10px 30px rgba(0,0,0,.5)' : '-10px 10px 30px rgba(0,0,0,.5)',
+        cbLeft: L ? '124px' : '-16px', cbFlip: L ? 'scaleX(-1)' : 'none',
+        hdMargin: L ? '-10px -12px 0 -10px' : '-10px -10px 0 -12px', hdRadius: L ? '0 16px 0 0' : '16px 0 0 0' }; })(),
+      sbRef: el => { if (el && el.offsetHeight && el.offsetHeight !== this._sbH) this._sbH = el.offsetHeight; },
+      fx: (s.tucked && !s.open ? (s.fx < 200 ? -46 / 3 : 401 - 46 * 2 / 3) : s.fx) + 'px', fy: s.fy + 'px',
+      floatTrans: s.dragging ? 'transform .3s cubic-bezier(.34,1.56,.64,1),opacity .2s' : 'left .35s cubic-bezier(.34,1.4,.64,1),top .35s cubic-bezier(.34,1.4,.64,1),transform .3s cubic-bezier(.34,1.56,.64,1),opacity .2s',
+      onFloatDown: e => this.floatDown(e),
       sbTransform: s.open ? 'translateX(0)' : 'translateX(110%)', sbOpacity: s.open ? 1 : 0, sbPointer: s.open ? 'auto' : 'none',
       isAutoOpen: s.mode === 'auto', isOpen: s.open,
       showBanner: p.showBanner ?? true,
@@ -304,11 +342,10 @@ class Component extends DCLogic {
       onMute: () => { this.setState({ muted: !s.muted }); this.ev(s.muted ? '菜单：开启声音' : '菜单：静音'); },
       onMenuHome: () => this.exit(),
       onConfirmExit: () => this.confirmExit(), onCancelExit: () => this.cancelExit(),
-      onFloat: () => this.openSidebar('manual'),
+      onFloat: () => { if (this._moved) { this._moved = false; return; } if (this._wasTucked) { this._wasTucked = false; clearTimeout(this._restore); this._restore = setTimeout(() => this.openSidebar('manual'), 380); return; } this.openSidebar('manual'); },
       onClose: () => this.closeSidebar(),
       onHome: () => this.ev('快捷：Home'), onDeposit: () => this.ev('快捷：Deposit'), onReload: () => this.ev('快捷：Reload'),
-      banners: PROMOS.map((p, j) => ({ src: p.src, opacity: j === s.bIdx ? 1 : 0, dotW: j === s.bIdx ? '10px' : '3px', dotOp: j === s.bIdx ? 1 : 0.55 })),
-      onBanner: () => { const p = PROMOS[s.bIdx]; const url = 'https://789bingo.com/promo?pin=' + p.id; this.ev('点击 Banner → /promo?pin=' + p.id); window.open(url, '_blank'); },
+      onBanner: () => { const link = (this.props.bannerLink || '').trim(); const url = link || 'https://789bingo.com/promo/' + PROMOS[0].id; this.ev('点击 Banner → ' + (link ? '自定义链接 ' : '活动详情页 ') + url); window.open(url, '_blank'); },
       onRetry: () => { this.setState({ retryOk: true }); this.ev('重试加载推荐列表'); },
       onReenter: () => { this.setState({ screen: 'game', autoUsed: false, closedAfterAuto: false }); this.ev('进入游戏：' + cur.name, { floatImp: 1 }); },
       onReset: () => this.setState({ menu: false, confirm: false, game: 'wukong', screen: 'game', open: false, mode: null, autoUsed: false, closedAfterAuto: false, lock: false, toast: '', retryOk: false, m: zero(), log: [] }),

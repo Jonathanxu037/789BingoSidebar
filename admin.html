@@ -82,29 +82,48 @@ input,select,button{font-family:inherit}
 
           <div style="border:1px solid #e3e6ea">
             <div style="height:46px;display:flex;align-items:center;gap:16px;padding:0 12px;border-bottom:1px solid #e8eaec">
-              <span style="font-weight:700">Banner配置（根据排序显示顺序，每 5 秒轮播）</span>
-              <span style="display:flex;align-items:center;gap:8px;color:#515a6e">展示 Banner
-                <span onClick="{{ onToggleBanner }}" style="display:inline-block;width:44px;height:22px;border-radius:11px;cursor:pointer;position:relative;transition:background .2s;background:{{ bannerBg }}"><span style="position:absolute;top:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:left .2s;left:{{ bannerKnob }}"></span></span>
-              </span>
-              <button onClick="{{ onAddBanner }}" style="margin-left:auto;height:32px;padding:0 16px;border:none;background:#3a9bef;color:#fff;border-radius:3px;cursor:pointer">新增</button>
+              <span style="font-weight:700">Mini Banner 配置</span>
+              <span style="color:#999;font-size:12px">前台仅展示 1 个活动，不轮播；点击按所选跳转方式跳转：活动详情页或自定义链接（二选一）</span>
             </div>
-            <div style="padding:10px">
-              <div style="display:grid;grid-template-columns:80px 200px minmax(0,1fr) 110px 110px 150px;border:1px solid #e8eaec;border-bottom:none;background:#f8f8f9;color:#515a6e;font-weight:700;font-size:12px">
-                <div style="padding:12px;text-align:center">排序</div><div style="padding:12px;text-align:center">Banner图</div><div style="padding:12px;text-align:center">关联活动（点击跳转 Promotions 并置顶）</div><div style="padding:12px;text-align:center">是否展示</div><div style="padding:12px;text-align:center">排序调整</div><div style="padding:12px;text-align:center">操作</div>
+            <div style="padding:18px 20px;display:grid;grid-template-columns:110px minmax(0,1fr);gap:18px 14px;align-items:start">
+              <span style="color:#515a6e;text-align:right;line-height:22px">是否展示</span>
+              <span onClick="{{ onToggleBanner }}" style="display:inline-block;width:44px;height:22px;border-radius:11px;cursor:pointer;position:relative;transition:background .2s;background:{{ bannerBg }}"><span style="position:absolute;top:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:left .2s;left:{{ bannerKnob }}"></span></span>
+              <span style="color:#515a6e;text-align:right;line-height:22px"><span style="color:#ed4014">*</span> 跳转方式</span>
+              <div style="display:flex;gap:24px;align-items:center;height:22px">
+                <label onClick="{{ onTypePromo }}" style="display:flex;align-items:center;gap:6px;cursor:pointer;color:#515a6e"><span style="width:14px;height:14px;border-radius:50%;border:1px solid {{ tpBorder }};display:flex;align-items:center;justify-content:center;background:#fff"><span style="width:6px;height:6px;border-radius:50%;background:{{ tpDot }}"></span></span>选择活动（跳转活动详情页）</label>
+                <label onClick="{{ onTypeLink }}" style="display:flex;align-items:center;gap:6px;cursor:pointer;color:#515a6e"><span style="width:14px;height:14px;border-radius:50%;border:1px solid {{ tlBorder }};display:flex;align-items:center;justify-content:center;background:#fff"><span style="width:6px;height:6px;border-radius:50%;background:{{ tlDot }}"></span></span>自定义跳转链接</label>
               </div>
-              <sc-for list="{{ banners }}" as="b" hint-placeholder-count="3">
-                <div style="display:grid;grid-template-columns:80px 200px minmax(0,1fr) 110px 110px 150px;align-items:center;border:1px solid #e8eaec;border-top:none">
-                  <div style="padding:10px;text-align:center">{{ b.no }}</div>
-                  <div style="padding:8px;display:flex;justify-content:center"><img src="{{ b.src }}" alt="" style="width:150px;height:60px;object-fit:cover;border-radius:3px;border:1px solid #eee"></div>
-                  <div style="padding:10px;text-align:center;display:flex;flex-direction:column;gap:2px"><span>{{ b.name }}</span><span style="color:#999;font-size:12px;font-family:ui-monospace,Menlo,monospace">/promo?pin={{ b.id }}</span></div>
-                  <div style="padding:10px;display:flex;justify-content:center"><span onClick="{{ b.onToggle }}" style="display:inline-block;width:44px;height:22px;border-radius:11px;cursor:pointer;position:relative;background:{{ b.swBg }}"><span style="position:absolute;top:2px;width:18px;height:18px;border-radius:50%;background:#fff;left:{{ b.swKnob }}"></span></span></div>
-                  <div style="padding:10px;display:flex;justify-content:center;gap:6px"><button onClick="{{ b.onUp }}" style="width:28px;height:26px;border:1px solid #dcdee2;background:#fff;border-radius:3px;cursor:pointer">↑</button><button onClick="{{ b.onDown }}" style="width:28px;height:26px;border:1px solid #dcdee2;background:#fff;border-radius:3px;cursor:pointer">↓</button></div>
-                  <div style="padding:10px;display:flex;justify-content:center;gap:14px"><a href="#" onClick="{{ b.onEdit }}">编辑</a><a href="#" onClick="{{ b.onDel }}" style="color:#ed4014">删除</a></div>
+              <sc-if value="{{ isTypePromo }}" hint-placeholder-val="{{ true }}">
+                <span style="color:#515a6e;text-align:right;line-height:32px"><span style="color:#ed4014">*</span> 选择活动</span>
+                <div style="display:flex;flex-direction:column;gap:6px">
+                  <select value="{{ bPromo }}" onChange="{{ onBPromo }}" style="width:360px;height:32px;border:1px solid #dcdee2;border-radius:3px;padding:0 8px;color:#515a6e;background:#fff">
+                    <option value="">请选择当前平台已有活动</option>
+                    <sc-for list="{{ promoOptions }}" as="o" hint-placeholder-count="3"><option value="{{ o.id }}">{{ o.name }}</option></sc-for>
+                  </select>
+                  <span style="color:#999;font-size:12px">{{ bPromoHint }}</span>
                 </div>
-              </sc-for>
-              <sc-if value="{{ noBanners }}" hint-placeholder-val="{{ false }}">
-                <div style="border:1px solid #e8eaec;border-top:none;padding:24px;text-align:center;color:#999">No Data</div>
               </sc-if>
+              <sc-if value="{{ isTypeLink }}" hint-placeholder-val="{{ false }}">
+                <span style="color:#515a6e;text-align:right;line-height:32px"><span style="color:#ed4014">*</span> 跳转链接</span>
+                <div style="display:flex;flex-direction:column;gap:6px">
+                  <input value="{{ bLink }}" onInput="{{ onBLink }}" placeholder="https://789bingo.com/..." style="width:360px;height:32px;border:1px solid #dcdee2;border-radius:3px;padding:0 10px;color:#515a6e">
+                  <span style="color:#999;font-size:12px">点击 Mini Banner 将直接跳转至该链接，需以 http(s):// 开头</span>
+                </div>
+              </sc-if>
+              <span style="color:#515a6e;text-align:right;line-height:22px"><span style="color:#ed4014">*</span> Mini Banner 图</span>
+              <div style="display:flex;gap:16px;align-items:flex-start">
+                <label style="width:250px;height:100px;flex:none;border:1px dashed #c5c8ce;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#999;background-color:#fafafa;background-size:cover;background-position:center;cursor:pointer;background-image:{{ bImgCss }}">
+                  <input type="file" accept="image/png,image/jpeg" onChange="{{ onBFile }}" style="display:none">
+                  <span style="font-size:12px">{{ bImgHint }}</span>
+                </label>
+                <div style="display:flex;flex-direction:column;gap:8px;font-size:12px;color:#999;line-height:1.6">
+                  <span>单独上传该活动在 Mini Banner 位置展示的图片，不使用活动原有 Banner</span>
+                  <span>图片尺寸、格式及大小规格待设计稿确认后同步</span>
+                  <sc-if value="{{ hasBImg }}" hint-placeholder-val="{{ true }}">
+                    <div style="display:flex;gap:14px"><label style="color:#2d8cf0;cursor:pointer">重新上传<input type="file" accept="image/png,image/jpeg" onChange="{{ onBFile }}" style="display:none"></label><a href="#" onClick="{{ onBClear }}" style="color:#ed4014">删除</a></div>
+                  </sc-if>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -172,30 +191,7 @@ input,select,button{font-family:inherit}
     </div>
   </sc-if>
 
-  <sc-if value="{{ bannerModal }}" hint-placeholder-val="{{ false }}">
-    <div style="position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:10">
-      <div style="width:520px;background:#fff;border-radius:4px;display:flex;flex-direction:column;box-shadow:0 8px 30px rgba(0,0,0,.25)">
-        <div style="height:50px;display:flex;align-items:center;padding:0 18px;border-bottom:1px solid #e8eaec;font-weight:700;font-size:14px">{{ bannerModalTitle }}<span onClick="{{ onCloseModal }}" style="margin-left:auto;cursor:pointer;color:#999;font-size:18px">×</span></div>
-        <div style="padding:18px;display:grid;grid-template-columns:100px minmax(0,1fr);gap:16px 12px;align-items:center">
-          <span style="color:#515a6e;text-align:right">Banner图</span>
-          <div style="display:flex;flex-direction:column;gap:6px">
-            <div style="width:250px;height:100px;border:1px dashed #c5c8ce;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#999;background:#fafafa;background-size:cover;background-position:center;background-image:{{ draftImg }}">{{ draftImgHint }}</div>
-            <span style="color:#999;font-size:12px">建议 700×280（5:2），JPG/PNG，≤ 500KB</span>
-          </div>
-          <span style="color:#515a6e;text-align:right">关联活动</span>
-          <select value="{{ draftPromo }}" onChange="{{ onDraftPromo }}" style="height:32px;border:1px solid #dcdee2;border-radius:3px;padding:0 8px">
-            <sc-for list="{{ promoOptions }}" as="o" hint-placeholder-count="3"><option value="{{ o.id }}">{{ o.name }}</option></sc-for>
-          </select>
-          <span style="color:#515a6e;text-align:right">是否展示</span>
-          <span onClick="{{ onDraftShow }}" style="display:inline-block;width:44px;height:22px;border-radius:11px;cursor:pointer;position:relative;background:{{ draftShowBg }}"><span style="position:absolute;top:2px;width:18px;height:18px;border-radius:50%;background:#fff;left:{{ draftShowKnob }}"></span></span>
-        </div>
-        <div style="height:56px;display:flex;align-items:center;justify-content:flex-end;gap:8px;padding:0 18px;border-top:1px solid #e8eaec">
-          <button onClick="{{ onCloseModal }}" style="height:32px;padding:0 16px;border:1px solid #dcdee2;background:#fff;border-radius:3px;cursor:pointer">取消</button>
-          <button onClick="{{ onConfirmBanner }}" style="height:32px;padding:0 18px;border:none;background:#2d8cf0;color:#fff;border-radius:3px;cursor:pointer">确定</button>
-        </div>
-      </div>
-    </div>
-  </sc-if>
+
 
   <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
     <div style="position:fixed;top:90px;left:50%;transform:translateX(-50%);background:#fff;border-radius:4px;padding:10px 18px;box-shadow:0 4px 16px rgba(0,0,0,.18);display:flex;align-items:center;gap:8px;z-index:20"><span style="width:16px;height:16px;border-radius:50%;background:#19be6b;color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center">✓</span>{{ toast }}</div>
@@ -228,12 +224,12 @@ const ST = { ok: ['正常', '#19be6b', '#e8f8ef', ''], maintenance: ['维护中'
 const sw = on => ({ bg: on ? '#2d8cf0' : '#ccc', knob: on ? '24px' : '2px' });
 const init = () => ({
   enabled: true, autoExpand: true, showBanner: true, count: 10,
-  banners: PROMOS.map(p => ({ ...p, show: true })),
+  bPromo: 'friday-jackpot-drop', bImg: 'assets/banner-1.png', bLink: '', bType: 'promo',
   rec: ['dragon-tiger', 'pok-deng', 'sic-bo', 'crazy-time', 'fortune-goddess', 'fortune-gems', 'fortune-bingo', 'fortune-gems-2', 'super-ace-deluxe', 'super-ace-joker'],
 });
 
 class Component extends DCLogic {
-  state = { ...init(), modal: null, picked: [], search: '', toast: '', draft: null, editIdx: -1 };
+  state = { ...init(), modal: null, picked: [], search: '', toast: '' };
   flash(t) { this.setState({ toast: t }); clearTimeout(this._t); this._t = setTimeout(() => this.setState({ toast: '' }), 1800); }
   move(key, i, d) {
     const arr = [...this.state[key]]; const j = i + d;
@@ -265,8 +261,6 @@ class Component extends DCLogic {
         onPick: () => { if (added) return; this.setState({ picked: picked ? s.picked.filter(x => x !== g.id) : [...s.picked, g.id] }); },
       };
     });
-    const d = s.draft || {}; const ds = sw(d.show);
-    const dp = PROMOS.find(p => p.id === d.id);
     return {
       menuTop: ['公告管理', '充值配置', '日志管理'],
       menuSub: ['活动列表', '活动类别管理', '活动目的管理', '派奖审核', '活动图素材管理', '轮播图素材管理'],
@@ -277,33 +271,25 @@ class Component extends DCLogic {
       onToggleEnabled: () => this.setState({ enabled: !s.enabled }),
       onToggleAuto: () => s.enabled && this.setState({ autoExpand: !s.autoExpand }),
       onToggleBanner: () => this.setState({ showBanner: !s.showBanner }),
-      banners: s.banners.map((x, i) => {
-        const w = sw(x.show);
-        return { no: i + 1, src: x.src, name: x.name, id: x.id, swBg: w.bg, swKnob: w.knob,
-          onToggle: () => this.setState({ banners: s.banners.map((y, j) => j === i ? { ...y, show: !y.show } : y) }),
-          onUp: () => this.move('banners', i, -1), onDown: () => this.move('banners', i, 1),
-          onEdit: ev => { ev.preventDefault(); this.setState({ modal: 'banner', editIdx: i, draft: { ...x } }); },
-          onDel: ev => { ev.preventDefault(); this.del('banners', i); } };
-      }),
-      noBanners: s.banners.length === 0,
-      onAddBanner: () => this.setState({ modal: 'banner', editIdx: -1, draft: { ...PROMOS[0], show: true } }),
+      bPromo: s.bPromo, promoOptions: PROMOS.map(p => ({ id: p.id, name: p.name })),
+      onBPromo: ev => this.setState({ bPromo: ev.target.value }),
+      bLink: s.bLink, onBLink: ev => this.setState({ bLink: ev.target.value }),
+      isTypePromo: s.bType === 'promo', isTypeLink: s.bType === 'link',
+      tpBorder: s.bType === 'promo' ? '#2d8cf0' : '#dcdee2', tpDot: s.bType === 'promo' ? '#2d8cf0' : 'transparent',
+      tlBorder: s.bType === 'link' ? '#2d8cf0' : '#dcdee2', tlDot: s.bType === 'link' ? '#2d8cf0' : 'transparent',
+      onTypePromo: () => this.setState({ bType: 'promo' }), onTypeLink: () => this.setState({ bType: 'link' }),
+      bPromoHint: '仅可选择当前平台展示中的活动；点击跳转该活动详情页' + (s.bPromo ? '（/promo/' + s.bPromo + '）' : '') + '；活动下架 / 结束后前台自动隐藏',
+      bImgCss: s.bImg ? `url(${s.bImg})` : 'none', bImgHint: s.bImg ? '' : '+ 点击上传图片', hasBImg: !!s.bImg,
+      onBFile: ev => { const file = ev.target.files && ev.target.files[0]; if (!file) return; const r = new FileReader(); r.onload = () => this.setState({ bImg: r.result }); r.readAsDataURL(file); ev.target.value = ''; },
+      onBClear: ev => { ev.preventDefault(); this.setState({ bImg: '' }); },
       count: s.count, onCount: ev => this.setState({ count: Math.max(1, Math.min(30, parseInt(ev.target.value) || 1)) }),
       recRows, noGames: s.rec.length === 0,
       onOpenGames: () => this.setState({ modal: 'game', picked: [], search: '' }),
-      gameModal: s.modal === 'game', bannerModal: s.modal === 'banner',
+      gameModal: s.modal === 'game',
       search: s.search, onSearch: ev => this.setState({ search: ev.target.value }), pool, pickedCount: s.picked.length,
       onCloseModal: () => this.setState({ modal: null }),
       onConfirmGames: () => { this.setState({ rec: [...s.rec, ...s.picked], modal: null }); if (s.picked.length) this.flash('已添加 ' + s.picked.length + ' 个游戏'); },
-      bannerModalTitle: s.editIdx >= 0 ? '编辑 Banner' : '新增 Banner',
-      draftImg: dp ? `url(${dp.src})` : 'none', draftImgHint: dp ? '' : '点击上传',
-      draftPromo: d.id, promoOptions: PROMOS.map(p => ({ id: p.id, name: p.name })),
-      onDraftPromo: ev => { const p = PROMOS.find(x => x.id === ev.target.value); this.setState({ draft: { ...d, ...p } }); },
-      draftShowBg: ds.bg, draftShowKnob: ds.knob, onDraftShow: () => this.setState({ draft: { ...d, show: !d.show } }),
-      onConfirmBanner: () => {
-        const arr = [...s.banners]; if (s.editIdx >= 0) arr[s.editIdx] = d; else arr.push(d);
-        this.setState({ banners: arr, modal: null }); this.flash(s.editIdx >= 0 ? 'Banner 已更新' : 'Banner 已新增');
-      },
-      onSave: () => this.flash('保存成功，前台即时生效'),
+      onSave: () => { if (s.showBanner) { if (!s.bImg) return this.flash('请上传 Mini Banner 图'); if (s.bType === 'promo' && !s.bPromo) return this.flash('请选择活动'); if (s.bType === 'link' && !/^https?:\/\/\S+$/.test(s.bLink.trim())) return this.flash('跳转链接格式不正确，需以 http(s):// 开头'); } this.flash('保存成功，前台即时生效'); },
       onReset: () => { this.setState(init()); this.flash('已重置为上次保存的配置'); },
       hasToast: !!s.toast, toast: s.toast,
     };
